@@ -1,4 +1,4 @@
-package zeale.apps.notesss;
+package zeale.applicationss.notesss;
 
 import java.io.File;
 import java.io.FileNotFoundException;
