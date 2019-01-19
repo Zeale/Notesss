@@ -15,4 +15,10 @@ public interface Page {
 	 * @return The {@link Stage} that this {@link Page} was displayed on.
 	 */
 	Stage display(Stage stage);
+
+	enum StageState {
+		FULLSCREEN, WINDOWED
+	}
+	
+	default void onStateChanged(StageState state) {		}
 }
