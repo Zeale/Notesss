@@ -1,10 +1,10 @@
 package zeale.applicationss.notesss.utilities;
 
-public class Box<I> {
+public class MutableBox<I> {
+	public I item;
 
-	public Box(I item) {
+	public MutableBox(I item) {
 		this.item = item;
 	}
 
-	public final I item;
 }
