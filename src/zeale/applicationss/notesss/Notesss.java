@@ -1,7 +1,12 @@
 package zeale.applicationss.notesss;
 
+import java.io.File;
+
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import zeale.applicationss.notesss.launch.JavaFXNotesLauncher;
 import zeale.applicationss.notesss.utilities.Utilities;
+import zeale.applicationss.notesss.utilities.generators.Generator;
 
 /**
  * <p>
@@ -22,7 +27,21 @@ import zeale.applicationss.notesss.utilities.Utilities;
  *
  */
 public class Notesss {
+
 	public static void main(String[] args) {
 		JavaFXNotesLauncher.launchNotesss(args);
 	}
+	
+	private static Generator<Paint> colorGenerator = Generator.arrayLoop(Color.RED, Color.GREEN, Color.BLUE, Color.GOLD);
+	
+	public static void setColorGenerator(Generator<Paint> colorGenerator) {
+		if(colorGenerator==null)
+			throw new IllegalArgumentException();
+		Notesss.colorGenerator = colorGenerator;
+	}
+	
+	public static final Paint getNextColor() {
+		return colorGenerator.next();
+	}
+
 }
