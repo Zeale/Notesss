@@ -2,6 +2,14 @@ package zeale.applicationss.notesss.utilities.generators;
 
 import java.util.Iterator;
 
+/**
+ * An implementation of a {@link Generator} that returns <code>null</code> to
+ * signify that it has finished.
+ * 
+ * @author Zeale
+ *
+ * @param <R> The return type of this {@link Generator}.
+ */
 public abstract class NullstopGenerator<R> implements Generator<R>, Iterator<R> {
 
 	private R element;
@@ -13,7 +21,7 @@ public abstract class NullstopGenerator<R> implements Generator<R>, Iterator<R> 
 	}
 
 	@Override
-	public boolean hasNext() {
+	public final boolean hasNext() {
 		if (!cached)
 			cacheNext();
 		return element != null;
@@ -22,7 +30,7 @@ public abstract class NullstopGenerator<R> implements Generator<R>, Iterator<R> 
 	protected abstract R nextItem();
 
 	@Override
-	public R next() {
+	public final R next() {
 		if (cached) {
 			cached = false;
 			return element;
