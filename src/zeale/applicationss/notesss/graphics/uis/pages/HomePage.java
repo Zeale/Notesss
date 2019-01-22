@@ -8,9 +8,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import zeale.applicationss.notesss.ApplicationProperties;
 
 // Fullscreen will have a side menu, window mode will have a regular menu bar.
-public class HomePage extends Page {
+public class HomePage implements Page {
 
 	private final Text title = new Text("Notesss");
 
@@ -28,8 +29,9 @@ public class HomePage extends Page {
 	private final Scene scene = new Scene(wrapper);
 
 	@Override
-	public Stage display(Stage stage) {
+	public Stage display(Stage stage, ApplicationProperties properties) {
 		stage.setScene(scene);
+		// TODO Auto-generated method stub
 		return stage;
 	}
 
