@@ -1,6 +1,11 @@
 package zeale.applicationss.notesss;
 
-import javafx.scene.paint.Color;
+import static zeale.applicationss.notesss.utilities.colors.ColorList.DARK_CERULEAN;
+import static zeale.applicationss.notesss.utilities.colors.ColorList.JET;
+import static zeale.applicationss.notesss.utilities.colors.ColorList.MYRTLE_GREEN;
+import static zeale.applicationss.notesss.utilities.colors.ColorList.SMOKY_BLACK;
+import static zeale.applicationss.notesss.utilities.colors.ColorList.TANGERINE;
+
 import javafx.scene.paint.Paint;
 import zeale.applicationss.notesss.launch.JavaFXNotesLauncher;
 import zeale.applicationss.notesss.utilities.Utilities;
@@ -24,10 +29,12 @@ import zeale.applicationss.notesss.utilities.generators.Generator;
  * @author Zeale
  *
  */
+// TODO Make app download/set up its own dependencies bc it makes me feel better about myself.
 public class Notesss {
-
 	private static final double DEFAULT_BASE_WINDOW_WIDTH = 1920, DEFAULT_BASE_WINDOW_HEIGHT = 1080;
 
+	// PROV This sort of API (with a Utilities object) may not be very pleasing in
+	// practice, so it's been marked as provisional.
 	public static final Utilities utilities = new Utilities(DEFAULT_BASE_WINDOW_WIDTH, DEFAULT_BASE_WINDOW_HEIGHT);
 
 	public static Utilities getUtilities() {
@@ -38,8 +45,8 @@ public class Notesss {
 		JavaFXNotesLauncher.launchNotesss(args);
 	}
 
-	private static Generator<Paint> colorGenerator = Generator.arrayLoop(Color.RED, Color.GREEN, Color.BLUE,
-			Color.GOLD);
+	private static Generator<Paint> colorGenerator = Generator.arrayLoop(SMOKY_BLACK, DARK_CERULEAN, TANGERINE, JET,
+			MYRTLE_GREEN);
 
 	public static void setColorGenerator(Generator<Paint> colorGenerator) {
 		if (colorGenerator == null)
