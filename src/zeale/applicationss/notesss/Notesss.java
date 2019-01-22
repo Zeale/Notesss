@@ -32,7 +32,9 @@ import zeale.applicationss.notesss.utilities.generators.Generator;
 // TODO Make app download/set up its own dependencies bc it makes me feel better about myself.
 public class Notesss {
 
-	public static final ApplicationProperties properties = ApplicationProperties.getDefault();
+	public static ApplicationProperties properties() {
+		return ApplicationProperties.getDefault();
+	}
 
 	private static final double DEFAULT_BASE_WINDOW_WIDTH = 1920, DEFAULT_BASE_WINDOW_HEIGHT = 1080;
 
