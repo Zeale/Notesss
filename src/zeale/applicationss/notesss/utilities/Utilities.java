@@ -1,5 +1,8 @@
 package zeale.applicationss.notesss.utilities;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
@@ -13,6 +16,24 @@ public final class Utilities {
 			AnchorPane.setRightAnchor(n, anchor);
 			AnchorPane.setBottomAnchor(n, anchor);
 		}
+	}
+
+	public @SafeVarargs static <E> E[] array(E... elements) {
+		return elements;
+	}
+
+	public @SafeVarargs static <E> E[] array(int size, E... elements) {
+		return Arrays.copyOf(elements, size);
+	}
+
+	public static <E> E[] toArray(Collection<E> collection) {
+		E[] array = array(collection.size());
+		int pos = 0;
+		for (E e : collection) {
+			array[pos] = e;
+			pos++;
+		}
+		return array;
 	}
 
 	public static final void executeOnFXThread(Runnable task) {
