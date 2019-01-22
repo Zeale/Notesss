@@ -1,24 +1,14 @@
 package zeale.applicationss.notesss.graphics.uis.pages;
 
 import javafx.stage.Stage;
+import zeale.applicationss.notesss.ApplicationProperties;
 
-public interface Page {
-
-	default Stage display() {
-		return display(new Stage());
-	}
-
-	/**
-	 * Displays this {@link Page} on the given {@link Stage} and returns the
-	 * {@link Stage} when finished.
-	 * 
-	 * @return The {@link Stage} that this {@link Page} was displayed on.
-	 */
-	Stage display(Stage stage);
-
-	enum StageState {
-		FULLSCREEN, WINDOWED
+public abstract class Page implements Displayable {
+	protected Page(ApplicationProperties properties) {
+		
 	}
 	
-	default void onStateChanged(StageState state) {		}
+	protected Page() {
+		
+	}
 }

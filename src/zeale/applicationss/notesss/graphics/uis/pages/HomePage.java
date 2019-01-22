@@ -10,7 +10,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 // Fullscreen will have a side menu, window mode will have a regular menu bar.
-public class HomePage implements Page {
+public class HomePage extends Page {
 
 	private final Text title = new Text("Notesss");
 
