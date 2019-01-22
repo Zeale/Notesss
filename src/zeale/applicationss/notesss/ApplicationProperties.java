@@ -20,10 +20,22 @@ import zeale.applicationss.notesss.graphics.uis.pages.Page;
  * based on custom/spoofed properties, is desired, an instance of this class can
  * be forged and passed to the constructor of a given {@link Page}.
  * </p>
+ * <p>
+ * <u>{@link ApplicationProperties} are immutable.</u>
+ * </p>
  * 
  * @author Zeale
  *
  */
 public class ApplicationProperties {
 
+	private static ApplicationProperties defaultProperties;
+
+	static ApplicationProperties getDefault() {
+		return defaultProperties == null ? (defaultProperties = buildDefProps()) : defaultProperties;
+	}
+
+	private static ApplicationProperties buildDefProps() {
+		return new ApplicationProperties();
+	}
 }
