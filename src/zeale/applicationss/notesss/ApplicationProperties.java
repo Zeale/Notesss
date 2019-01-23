@@ -10,18 +10,7 @@ import zeale.applicationss.notesss.graphics.uis.pages.Page;
  * "properties and data," of the application.
  * </p>
  * <p>
- * When a {@link Page} is initialized normally, it is given the
- * {@link ApplicationProperties} instance held by the {@link Notesss} class.
- * This instance of {@link ApplicationProperties} is the application's primary
- * set of properties.
- * </p>
- * <p>
- * If, however, the creation of a {@link Page} instance, that is initialized
- * based on custom/spoofed properties, is desired, an instance of this class can
- * be forged and passed to the constructor of a given {@link Page}.
- * </p>
- * <p>
- * <u>{@link ApplicationProperties} are immutable.</u>
+ * <u>{@link ApplicationProperties} are immutable, apart from the .</u>
  * </p>
  * 
  * @author Zeale
