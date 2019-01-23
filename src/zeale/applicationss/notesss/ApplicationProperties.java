@@ -38,4 +38,18 @@ public class ApplicationProperties {
 	private static ApplicationProperties buildDefProps() {
 		return new ApplicationProperties();
 	}
+
+	private ApplicationProperties() {
+
+	}
+
+	public static PropertyEditor properties() {
+		return new ApplicationProperties().new PropertyEditor();
+	}
+
+	public class PropertyEditor {
+		public ApplicationProperties properties() {
+			return ApplicationProperties.this;
+		}
+	}
 }
