@@ -6,13 +6,14 @@ import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import zeale.applicationss.notesss.ApplicationProperties;
+import zeale.applicationss.notesss.Notesss;
+import zeale.apps.tools.console.std.StandardConsole.EmbeddedStandardConsoleView;
 
 // Fullscreen will have a side menu, window mode will have a regular menu bar.
 public class HomePage implements Page {
@@ -28,6 +29,23 @@ public class HomePage implements Page {
 		AnchorPane.setLeftAnchor(wrapper, 0d);
 		AnchorPane.setRightAnchor(wrapper, 0d);
 		AnchorPane.setTopAnchor(wrapper, 25d);
+		EmbeddedStandardConsoleView console = Notesss.CONSOLE.getEmbeddedView();
+//		console.setScaleX(0.8);
+//		console.setScaleY(0.8);
+
+		VBox leftColumn = new VBox(15, console), rightColumn = new VBox(15);
+		root.getChildren().addAll(leftColumn, rightColumn);
+
+		leftColumn.setFillWidth(false);
+		rightColumn.setFillWidth(false);
+
+		AnchorPane.setTopAnchor(leftColumn, 125d);
+		AnchorPane.setLeftAnchor(leftColumn, 15d);
+		AnchorPane.setBottomAnchor(leftColumn, 30d);
+
+		AnchorPane.setTopAnchor(rightColumn, 125d);
+		AnchorPane.setRightAnchor(rightColumn, 15d);
+		AnchorPane.setBottomAnchor(rightColumn, 30d);
 	}
 	private final ScrollPane rootScroll = new ScrollPane(root);
 	{

@@ -1,5 +1,6 @@
 package zeale.applicationss.notesss.graphics.uis.pages;
 
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import zeale.applicationss.notesss.ApplicationProperties;
 import zeale.applicationss.notesss.Notesss;
