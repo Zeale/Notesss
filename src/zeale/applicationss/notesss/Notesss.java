@@ -6,6 +6,14 @@ import static zeale.applicationss.notesss.utilities.colors.ColorList.MYRTLE_GREE
 import static zeale.applicationss.notesss.utilities.colors.ColorList.SMOKY_BLACK;
 import static zeale.applicationss.notesss.utilities.colors.ColorList.TANGERINE;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Map.Entry;
+
 import javafx.scene.paint.Paint;
 import zeale.applicationss.notesss.launch.JavaFXNotesLauncher;
 import zeale.applicationss.notesss.utilities.Utilities;
@@ -32,8 +40,11 @@ import zeale.apps.tools.console.std.StandardConsole;
  */
 // TODO Make app download/set up its own dependencies bc it makes me feel better about myself.
 public class Notesss {
-	
-	public static  StandardConsole CONSOLE = new StandardConsole();
+
+	private static final String DEFAULT_FILESTORAGE_PATH = System.getProperty("user.home", "C:/Program Files")
+			+ "/Notesss/File Storage";
+
+	public static StandardConsole CONSOLE = new StandardConsole();
 
 	public static ApplicationProperties properties() {
 		return ApplicationProperties.getDefault();
@@ -64,6 +75,14 @@ public class Notesss {
 
 	public static final Paint getNextColor() {
 		return colorGenerator.next();
+	}
+
+	public static OutputStream streamOut(String path) throws FileNotFoundException {
+		return new FileOutputStream(new File(DEFAULT_FILESTORAGE_PATH, path));
+	}
+
+	public static InputStream streamIn(String path) throws FileNotFoundException {
+		return new FileInputStream(new File(DEFAULT_FILESTORAGE_PATH, path));
 	}
 
 }
