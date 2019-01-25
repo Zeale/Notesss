@@ -2,6 +2,9 @@ package zeale.applicationss.notesss.graphics.uis.pages;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TextArea;
@@ -43,7 +46,15 @@ public class HomePage implements Page {
 		rootScroll.setFitToWidth(true);
 		rootScroll.setHbarPolicy(ScrollBarPolicy.NEVER);
 	}
+
+	private final MenuItem save = new MenuItem("Save");
+	private final MenuItem load = new MenuItem("Load");
+	private final Menu fileMenu = new Menu("File", null, save, load);
+	private final MenuBar menubar = new MenuBar(fileMenu);
 	private final BorderPane wrapper = new BorderPane(rootScroll);
+	{
+		wrapper.setTop(menubar);
+	}
 	private final Scene scene = new Scene(wrapper);
 
 	@Override
