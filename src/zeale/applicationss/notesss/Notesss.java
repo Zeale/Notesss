@@ -10,6 +10,7 @@ import javafx.scene.paint.Paint;
 import zeale.applicationss.notesss.launch.JavaFXNotesLauncher;
 import zeale.applicationss.notesss.utilities.Utilities;
 import zeale.applicationss.notesss.utilities.generators.Generator;
+import zeale.apps.tools.console.std.StandardConsole;
 
 /**
  * <p>
@@ -31,6 +32,8 @@ import zeale.applicationss.notesss.utilities.generators.Generator;
  */
 // TODO Make app download/set up its own dependencies bc it makes me feel better about myself.
 public class Notesss {
+	
+	public static  StandardConsole CONSOLE = new StandardConsole();
 
 	public static ApplicationProperties properties() {
 		return ApplicationProperties.getDefault();
