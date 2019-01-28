@@ -1,6 +1,5 @@
 package zeale.applicationss.notesss.graphics.uis.pages;
 
-import java.awt.datatransfer.StringSelection;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
