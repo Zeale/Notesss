@@ -57,10 +57,12 @@ public class HomePage implements Page {
 		rootScroll.setHbarPolicy(ScrollBarPolicy.NEVER);
 	}
 
-	private final MenuItem save = new MenuItem("Save");
-	private final MenuItem load = new MenuItem("Load");
+	private final MenuItem save = new MenuItem("Save"), load = new MenuItem("Load");
 	private final Menu fileMenu = new Menu("File", null, save, load);
-	private final MenuBar menubar = new MenuBar(fileMenu);
+	private final MenuItem copy = new MenuItem("Copy"), cut = new MenuItem("Cut"), paste = new MenuItem("Paste"),
+			selectAll = new MenuItem("Select All"), delete = new MenuItem("Delete"), clear = new MenuItem("Clear");
+	private final Menu editMenu = new Menu("Edit", null, copy, cut, paste, selectAll, delete, clear);
+	private final MenuBar menubar = new MenuBar(fileMenu, editMenu);
 	private final BorderPane wrapper = new BorderPane(rootScroll);
 	private Stage stage;
 	{
