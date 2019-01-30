@@ -6,15 +6,26 @@ import java.util.Collection;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.paint.Paint;
 
 public final class Utilities {
 
 	public static final void setAllAnchors(Double anchor, Node... nodes) {
+		setAllAnchors(anchor, anchor, anchor, anchor, nodes);
+	}
+
+	public static Background getBackgroundFromColor(Paint color) {
+		return new Background(new BackgroundFill(color, null, null));
+	}
+
+	public static final void setAllAnchors(Double top, Double left, Double right, Double bottom, Node... nodes) {
 		for (Node n : nodes) {
-			AnchorPane.setTopAnchor(n, anchor);
-			AnchorPane.setLeftAnchor(n, anchor);
-			AnchorPane.setRightAnchor(n, anchor);
-			AnchorPane.setBottomAnchor(n, anchor);
+			AnchorPane.setTopAnchor(n, top);
+			AnchorPane.setLeftAnchor(n, left);
+			AnchorPane.setRightAnchor(n, right);
+			AnchorPane.setBottomAnchor(n, bottom);
 		}
 	}
 
@@ -29,10 +40,8 @@ public final class Utilities {
 	public static <E> E[] toArray(Collection<E> collection) {
 		E[] array = array(collection.size());
 		int pos = 0;
-		for (E e : collection) {
-			array[pos] = e;
-			pos++;
-		}
+		for (E e : collection)
+			array[pos++] = e;
 		return array;
 	}
 
