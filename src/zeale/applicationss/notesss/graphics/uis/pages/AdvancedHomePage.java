@@ -2,7 +2,10 @@ package zeale.applicationss.notesss.graphics.uis.pages;
 
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import zeale.applicationss.notesss.ApplicationProperties;
 import zeale.applicationss.notesss.Notesss;
@@ -13,14 +16,19 @@ public class AdvancedHomePage implements Page {
 
 	private final EmbeddedStandardConsoleView view = Notesss.CONSOLE.getEmbeddedView();
 
-	private final AnchorPane root = new AnchorPane();
+	private final Text title = new Text("Notesss");
+	private final TextField searchBar = new TextField();
+
+	private final VBox titleBox = new VBox(20, title, searchBar);
+	private final TilePane flow = new TilePane(view);
+	private final VBox root = new VBox(75, titleBox, flow);
 	private final ScrollPane scrollWrapper = new ScrollPane(root);
 	private final Scene scene = new Scene(scrollWrapper);
 
 	{
-		root.getChildren().add(view);
+		root.setBackground(Utilities.getBackgroundFromColor(Notesss.getNextColor()));
+		view.setBackground(Utilities.getBackgroundFromColor(Notesss.getNextColor()));
 		Utilities.setAllAnchors(25d, view);
-		root.setPrefWidth(1200);
 	}
 
 	@Override
