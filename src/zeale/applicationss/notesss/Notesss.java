@@ -1,11 +1,5 @@
 package zeale.applicationss.notesss;
 
-import static zeale.applicationss.notesss.utilities.colors.ColorList.DARK_CERULEAN;
-import static zeale.applicationss.notesss.utilities.colors.ColorList.JET;
-import static zeale.applicationss.notesss.utilities.colors.ColorList.MYRTLE_GREEN;
-import static zeale.applicationss.notesss.utilities.colors.ColorList.SMOKY_BLACK;
-import static zeale.applicationss.notesss.utilities.colors.ColorList.TANGERINE;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,7 +11,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import zeale.applicationss.notesss.launch.JavaFXNotesLauncher;
 import zeale.applicationss.notesss.utilities.Utilities;
-import zeale.applicationss.notesss.utilities.generators.Generator;
+import zeale.applicationss.notesss.utilities.colors.ColorList;
 import zeale.apps.tools.console.std.StandardConsole;
 
 /**
@@ -80,10 +74,9 @@ public class Notesss {
 		JavaFXNotesLauncher.launchNotesss(args);
 	}
 
-	private static Generator<Paint> colorGenerator = Generator.arrayLoop(SMOKY_BLACK, DARK_CERULEAN, TANGERINE, JET,
-			MYRTLE_GREEN);
+	private static ColorList colorGenerator = ColorList.ORANGE_BLUE_BLACK;
 
-	public static void setColorGenerator(Generator<Paint> colorGenerator) {
+	public static void setColorGenerator(ColorList colorGenerator) {
 		if (colorGenerator == null)
 			throw new IllegalArgumentException();
 		Notesss.colorGenerator = colorGenerator;
