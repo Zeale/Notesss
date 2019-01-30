@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import zeale.applicationss.notesss.launch.JavaFXNotesLauncher;
 import zeale.applicationss.notesss.utilities.Utilities;
@@ -39,6 +40,22 @@ import zeale.apps.tools.console.std.StandardConsole;
  */
 // TODO Make app download/set up its own dependencies bc it makes me feel better about myself.
 public class Notesss {
+
+	public static void error(String text) {
+		CONSOLE.println(text, Color.FIREBRICK);
+	}
+
+	public static void std(String text) {
+		CONSOLE.println(text, Color.DEEPSKYBLUE);
+	}
+
+	public static void info(String text) {
+		CONSOLE.println(text, Color.GREEN);
+	}
+
+	public static void warn(String text) {
+		CONSOLE.println(text, Color.GOLD);
+	}
 
 	private static final String DEFAULT_FILESTORAGE_PATH = System.getProperty("user.home", "C:/Program Files")
 			+ "/Notesss/File Storage";
