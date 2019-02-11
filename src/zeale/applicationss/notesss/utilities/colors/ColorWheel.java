@@ -24,6 +24,12 @@ public class ColorWheel implements Generator<Paint>, Lengthed {
 
 	private int pos;
 
+	public Paint startOver() {
+		Paint color = colors[pos];
+		pos = 0;
+		return color;
+	}
+
 	@Override
 	public Paint next() {
 		return colors[++pos >= colors.length ? (pos = 0) : pos];
