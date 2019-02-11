@@ -19,10 +19,18 @@ import zeale.applicationss.notesss.utilities.Utilities;
 
 public class AdvancedHomePage implements Page {
 
+	private final static Object LAYOUT_ITEM_PANE_KEY = new Object();
+
 	private final static StackPane getItemPaneForLayout(Pos position, Node... children) {
 		StackPane pane = new StackPane(children);
+		for (Node n : children)
+			n.getProperties().put(LAYOUT_ITEM_PANE_KEY, pane);
 		pane.setAlignment(position);
 		return pane;
+	}
+
+	private final static StackPane getLayoutItemPane(Node node) {
+		return (StackPane) node.getProperties().get(LAYOUT_ITEM_PANE_KEY);
 	}
 
 	private final Pane viewDummy = new Pane(), tabsDummy = new Pane(), historyDummy = new Pane(),
@@ -43,13 +51,13 @@ public class AdvancedHomePage implements Page {
 	private final Scene scene = new Scene(scrollWrapper);
 
 	{
-		// DUMMY
-		viewDummy.setPrefSize(400, 600);
-		tabsDummy.setPrefSize(400, 150);
+		// DUMMY Dummy nodes.
+		viewDummy.setPrefSize(400, 450);
+		tabsDummy.setPrefSize(400, 300);
 		historyDummy.setPrefSize(300, 300);
 		settingsDummy.setPrefSize(300, 450);
-		viewDummy.setMinSize(400, 600);
-		tabsDummy.setMinSize(400, 150);
+		viewDummy.setMinSize(400, 450);
+		tabsDummy.setMinSize(400, 300);
 		historyDummy.setMinSize(300, 300);
 		settingsDummy.setMinSize(300, 450);
 
@@ -57,6 +65,9 @@ public class AdvancedHomePage implements Page {
 		tabsDummy.setBackground(Utilities.getBackgroundFromColor(Color.PINK));
 		historyDummy.setBackground(Utilities.getBackgroundFromColor(Color.FIREBRICK));
 		settingsDummy.setBackground(Utilities.getBackgroundFromColor(Color.AQUAMARINE));
+
+		VBox.setMargin(getLayoutItemPane(viewDummy), new Insets(0, 0, 0, 10));
+		VBox.setMargin(getLayoutItemPane(settingsDummy), new Insets(0, 15, 0, 0));
 
 		// Shift left column down a little.
 		HBox.setMargin(leftItemWrapping, new Insets(20, 0, 0, 0));
@@ -71,6 +82,10 @@ public class AdvancedHomePage implements Page {
 		scrollWrapper.setFitToHeight(true);
 		scrollWrapper.setFitToWidth(true);
 		root.setPadding(new Insets(50));
+
+		/////////////////////////////////////////////////////////////////////////////////////
+
+		searchBar.setPrefWidth(600);
 
 	}
 
