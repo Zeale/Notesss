@@ -6,62 +6,63 @@ import javafx.scene.paint.Paint;
 import zeale.applicationss.notesss.utilities.Lengthed;
 import zeale.applicationss.notesss.utilities.generators.Generator;
 
-public class ColorWheel implements Generator<Paint>, Lengthed {
+public class ColorWheel<CT extends Paint> implements Generator<CT>, Lengthed {
 
 	// TODO Make ColorWheel generic (so instances that only hold Color objects can
 	// return Color arrays instead of Paint arrays).
 
-	private final Paint[] foregrounds, backgrounds;
+	private final CT[] foregrounds, backgrounds;
 
-	public Paint[] getForegrounds() {
+	public CT[] getForegrounds() {
 		return Arrays.copyOf(foregrounds, foregrounds.length);
 	}
 
-	public Paint getForegroundColor(int index) {
+	public CT getForegroundColor(int index) {
 		return foregrounds[index % foregrounds.length];
 	}
 
-	public Paint getBackgroundColor(int index) {
+	public CT getBackgroundColor(int index) {
 		return backgrounds[index % backgrounds.length];
 	}
 
-	public Paint getf(int index) {
+	public CT getf(int index) {
 		return getForegroundColor(index);
 	}
 
-	public Paint getb(int index) {
+	public CT getb(int index) {
 		return getBackgroundColor(index);
 	}
 
-	public Paint[] getBackgrounds() {
+	public CT[] getBackgrounds() {
 		return Arrays.copyOf(backgrounds, backgrounds.length);
 	}
 
-	public Paint[] getColors() {
-		Paint[] colors = Arrays.copyOf(foregrounds, len());
+	public CT[] getColors() {
+		CT[] colors = Arrays.copyOf(foregrounds, len());
 		System.arraycopy(backgrounds, 0, foregrounds, foregrounds.length, backgrounds.length);
 		return colors;
 	}
 
-	public Paint getColor(int index) {
+	public CT getColor(int index) {
 		return (index %= (len())) > foregrounds.length ? backgrounds[index -= foregrounds.length] : foregrounds[index];
 	}
 
-	public ColorWheel(Paint[] foregrounds, Paint... backgrounds) {
+	@SafeVarargs
+	public ColorWheel(CT[] foregrounds, CT... backgrounds) {
 		this.foregrounds = Arrays.copyOf(foregrounds, foregrounds.length);
 		this.backgrounds = Arrays.copyOf(backgrounds, backgrounds.length);
 	}
 
 	private int pos;
 
-	public Paint startOver() {
-		Paint color = getColor(pos);
+	public CT startOver() {
+		CT color = getColor(pos);
 		pos = 0;
 		return color;
 	}
 
 	@Override
-	public Paint next() {
+	public CT next() {
 		return getColor(++pos >= len() ? (pos = 0) : pos);
 	}
 
