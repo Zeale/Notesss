@@ -41,11 +41,11 @@ public class AdvancedHomePage implements Page {
 	private final TextField searchBar = new TextField();
 
 	private final VBox titleBox = new VBox(20, title, searchBar);
-	private final VBox leftItemWrapping = new VBox(30, getItemPaneForLayout(Pos.TOP_LEFT, viewDummy),
-			getItemPaneForLayout(Pos.BOTTOM_LEFT, tabsDummy)),
-			rightItemWrapping = new VBox(25, getItemPaneForLayout(Pos.TOP_RIGHT, historyDummy),
-					getItemPaneForLayout(Pos.BOTTOM_RIGHT, settingsDummy));
-	private final HBox itemsWrapping = new HBox(250, leftItemWrapping, rightItemWrapping);
+	private final VBox leftItemWrapping = new VBox(50, getItemPaneForLayout(Pos.BOTTOM_RIGHT, viewDummy),
+			getItemPaneForLayout(Pos.TOP_RIGHT, tabsDummy)),
+			rightItemWrapping = new VBox(50, getItemPaneForLayout(Pos.BOTTOM_LEFT, historyDummy),
+					getItemPaneForLayout(Pos.TOP_LEFT, settingsDummy));
+	private final HBox itemsWrapping = new HBox(50, leftItemWrapping, rightItemWrapping);
 
 	private final VBox root = new VBox(75, titleBox, itemsWrapping);
 	private final ScrollPane scrollWrapper = new ScrollPane(root);
@@ -53,14 +53,18 @@ public class AdvancedHomePage implements Page {
 
 	{
 		// DUMMY Dummy nodes.
-		viewDummy.setPrefSize(400, 450);
-		tabsDummy.setPrefSize(400, 300);
-		historyDummy.setPrefSize(300, 300);
-		settingsDummy.setPrefSize(300, 450);
-		viewDummy.setMinSize(400, 450);
-		tabsDummy.setMinSize(400, 300);
-		historyDummy.setMinSize(300, 300);
-		settingsDummy.setMinSize(300, 450);
+		viewDummy.setPrefSize(350, 350);// TL
+		tabsDummy.setPrefSize(400, 400);// BL
+		historyDummy.setPrefSize(400, 400);// TR
+		settingsDummy.setPrefSize(350, 350);// BR
+		viewDummy.setMaxSize(350, 350);// TL
+		tabsDummy.setMaxSize(400, 400);// BL
+		historyDummy.setMaxSize(400, 400);// TR
+		settingsDummy.setMaxSize(350, 350);// BR
+		viewDummy.setMinSize(250, 250);
+		tabsDummy.setMinSize(250, 250);
+		historyDummy.setMinSize(250, 250);
+		settingsDummy.setMinSize(250, 250);
 
 		ColorList<?> colorGenerator = Notesss.getColorGenerator();
 		Background firstForeground = Utilities.getBackgroundFromColor(colorGenerator.getf(0)),
@@ -70,8 +74,8 @@ public class AdvancedHomePage implements Page {
 		historyDummy.setBackground(secondForeground);
 		settingsDummy.setBackground(firstForeground);
 
-		VBox.setMargin(getLayoutItemPane(viewDummy), new Insets(0, 0, 0, 10));
-		VBox.setMargin(getLayoutItemPane(settingsDummy), new Insets(0, 15, 0, 0));
+//		VBox.setMargin(getLayoutItemPane(viewDummy), new Insets(0, 0, 0, 50));
+//		VBox.setMargin(getLayoutItemPane(settingsDummy), new Insets(0, 50, 0, 0));
 
 		// Shift left column down a little.
 //		HBox.setMargin(leftItemWrapping, new Insets(20, 0, 0, 0));
@@ -85,11 +89,12 @@ public class AdvancedHomePage implements Page {
 
 		scrollWrapper.setFitToHeight(true);
 		scrollWrapper.setFitToWidth(true);
-		root.setPadding(new Insets(50));
+		root.setPadding(new Insets(80));
 
 		/////////////////////////////////////////////////////////////////////////////////////
 
 		searchBar.setPrefWidth(600);
+		searchBar.setBackground(Utilities.getBackgroundFromColor(colorGenerator.getf(2)));
 
 	}
 
