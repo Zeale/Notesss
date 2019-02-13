@@ -18,15 +18,23 @@ public class ColorWheel<CT extends Paint> implements Generator<CT>, Lengthed {
 	}
 
 	public CT getForegroundColor(int index) {
-		return foregrounds[index % foregrounds.length];
+		return foregrounds.length == 0 ? null : foregrounds[index % foregrounds.length];
 	}
 
 	public CT getBackgroundColor(int index) {
-		return backgrounds[index % backgrounds.length];
+		return backgrounds.length == 0 ? null : backgrounds[index % backgrounds.length];
 	}
 
 	public CT getf(int index) {
 		return getForegroundColor(index);
+	}
+
+	public int getFSize() {
+		return foregrounds.length;
+	}
+
+	public int getBSize() {
+		return backgrounds.length;
 	}
 
 	public CT getb(int index) {
@@ -49,6 +57,8 @@ public class ColorWheel<CT extends Paint> implements Generator<CT>, Lengthed {
 
 	@SafeVarargs
 	public ColorWheel(CT[] foregrounds, CT... backgrounds) {
+		if (foregrounds.length == 0 || backgrounds.length == 0)
+			throw new IllegalArgumentException("Neither the foreground nor background arrays may be of size 0.");
 		this.foregrounds = Arrays.copyOf(foregrounds, foregrounds.length);
 		this.backgrounds = Arrays.copyOf(backgrounds, backgrounds.length);
 	}

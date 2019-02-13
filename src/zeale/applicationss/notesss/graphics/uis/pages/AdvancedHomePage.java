@@ -6,16 +6,17 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import zeale.applicationss.notesss.ApplicationProperties;
 import zeale.applicationss.notesss.Notesss;
 import zeale.applicationss.notesss.utilities.Utilities;
+import zeale.applicationss.notesss.utilities.colors.ColorList;
 
 public class AdvancedHomePage implements Page {
 
@@ -61,18 +62,21 @@ public class AdvancedHomePage implements Page {
 		historyDummy.setMinSize(300, 300);
 		settingsDummy.setMinSize(300, 450);
 
-		viewDummy.setBackground(Utilities.getBackgroundFromColor(Color.GREEN));
-		tabsDummy.setBackground(Utilities.getBackgroundFromColor(Color.PINK));
-		historyDummy.setBackground(Utilities.getBackgroundFromColor(Color.FIREBRICK));
-		settingsDummy.setBackground(Utilities.getBackgroundFromColor(Color.AQUAMARINE));
+		ColorList<?> colorGenerator = Notesss.getColorGenerator();
+		Background firstForeground = Utilities.getBackgroundFromColor(colorGenerator.getf(0)),
+				secondForeground = Utilities.getBackgroundFromColor(colorGenerator.getf(1));
+		viewDummy.setBackground(firstForeground);
+		tabsDummy.setBackground(secondForeground);
+		historyDummy.setBackground(secondForeground);
+		settingsDummy.setBackground(firstForeground);
 
 		VBox.setMargin(getLayoutItemPane(viewDummy), new Insets(0, 0, 0, 10));
 		VBox.setMargin(getLayoutItemPane(settingsDummy), new Insets(0, 15, 0, 0));
 
 		// Shift left column down a little.
-		HBox.setMargin(leftItemWrapping, new Insets(20, 0, 0, 0));
+//		HBox.setMargin(leftItemWrapping, new Insets(20, 0, 0, 0));
 
-		root.setBackground(Utilities.getBackgroundFromColor(Notesss.getNextColor()));
+		root.setBackground(Utilities.getBackgroundFromColor(colorGenerator.getb(0)));
 		Utilities.setAllAnchors(0d, root);
 		titleBox.setFillWidth(false);
 		titleBox.setAlignment(Pos.CENTER);

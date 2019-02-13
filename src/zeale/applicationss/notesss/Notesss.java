@@ -74,12 +74,16 @@ public class Notesss {
 		JavaFXNotesLauncher.launchNotesss(args);
 	}
 
-	private static ColorList colorGenerator = ColorList.ORANGE_BLUE_BLACK;
+	private static ColorList<?> colorGenerator = ColorList.ORANGE_BLUE_BLACK;
 
-	public static void setColorGenerator(ColorList colorGenerator) {
+	public static void setColorGenerator(ColorList<?> colorGenerator) {
 		if (colorGenerator == null)
 			throw new IllegalArgumentException();
 		Notesss.colorGenerator = colorGenerator;
+	}
+
+	public static ColorList<?> getColorGenerator() {
+		return colorGenerator;
 	}
 
 	public static final Paint getNextColor() {
