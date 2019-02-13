@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import zeale.applicationss.notesss.ApplicationProperties;
@@ -52,19 +53,26 @@ public class AdvancedHomePage implements Page {
 	private final Scene scene = new Scene(scrollWrapper);
 
 	{
+
+		final double bigBoxSize = 325, lilBoxSize = 275, boxMinSize = 200;
+
+		final double bigBoxPrefWidth = bigBoxSize, bigBoxPrefHeight = bigBoxSize, lilBoxPrefWidth = lilBoxSize,
+				lilBoxPrefHeight = lilBoxSize;
+		final double boxMinWidth = boxMinSize, boxMinHeight = boxMinSize;
+
 		// DUMMY Dummy nodes.
-		viewDummy.setPrefSize(350, 350);// TL
-		tabsDummy.setPrefSize(400, 400);// BL
-		historyDummy.setPrefSize(400, 400);// TR
-		settingsDummy.setPrefSize(350, 350);// BR
-		viewDummy.setMaxSize(350, 350);// TL
-		tabsDummy.setMaxSize(400, 400);// BL
-		historyDummy.setMaxSize(400, 400);// TR
-		settingsDummy.setMaxSize(350, 350);// BR
-		viewDummy.setMinSize(250, 250);
-		tabsDummy.setMinSize(250, 250);
-		historyDummy.setMinSize(250, 250);
-		settingsDummy.setMinSize(250, 250);
+		viewDummy.setPrefSize(lilBoxPrefWidth, lilBoxPrefHeight);// TL
+		tabsDummy.setPrefSize(bigBoxPrefWidth, bigBoxPrefHeight);// BL
+		historyDummy.setPrefSize(bigBoxPrefWidth, bigBoxPrefHeight);// TR
+		settingsDummy.setPrefSize(lilBoxPrefWidth, lilBoxPrefHeight);// BR
+		viewDummy.setMaxSize(lilBoxPrefWidth, lilBoxPrefHeight);// TL
+		tabsDummy.setMaxSize(bigBoxPrefWidth, bigBoxPrefHeight);// BL
+		historyDummy.setMaxSize(bigBoxPrefWidth, bigBoxPrefHeight);// TR
+		settingsDummy.setMaxSize(lilBoxPrefWidth, lilBoxPrefHeight);// BR
+		viewDummy.setMinSize(boxMinWidth, boxMinHeight);
+		tabsDummy.setMinSize(boxMinWidth, boxMinHeight);
+		historyDummy.setMinSize(boxMinWidth, boxMinHeight);
+		settingsDummy.setMinSize(boxMinWidth, boxMinHeight);
 
 		ColorList<?> colorGenerator = Notesss.getColorGenerator();
 		Background firstForeground = Utilities.getBackgroundFromColor(colorGenerator.getf(0)),
@@ -95,6 +103,11 @@ public class AdvancedHomePage implements Page {
 
 		searchBar.setPrefWidth(600);
 		searchBar.setBackground(Utilities.getBackgroundFromColor(colorGenerator.getf(2)));
+
+		title.setFont(Font.font(60));
+		title.setFill(colorGenerator.getf(2));
+		title.setStroke(colorGenerator.getf(2));
+		title.setStrokeWidth(1.4);
 
 	}
 
