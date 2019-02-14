@@ -97,7 +97,7 @@ public class AdvancedHomePage implements Page {
 
 		scrollWrapper.setFitToHeight(true);
 		scrollWrapper.setFitToWidth(true);
-		root.setPadding(new Insets(80));
+		root.setPadding(new Insets(40, 80, 100, 80));
 
 		/////////////////////////////////////////////////////////////////////////////////////
 
