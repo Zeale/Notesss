@@ -1,8 +1,8 @@
 package zeale.applicationss.notesss.graphics.uis.pages;
 
+import javafx.animation.Transition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -19,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import zeale.applicationss.notesss.ApplicationProperties;
 import zeale.applicationss.notesss.Notesss;
 import zeale.applicationss.notesss.utilities.Utilities;
@@ -60,16 +61,44 @@ public class AdvancedHomePage implements Page {
 	private final BooleanProperty shadowed = new SimpleBooleanProperty(),
 			shadowOnFocus = new SimpleBooleanProperty(false);
 	{
-		shadowed.addListener((observable, oldValue, newValue) -> {
-			DropShadow cardShadow = newValue ? new DropShadow(20, Color.BLACK) : null;
-			viewDummy.setEffect(cardShadow);
-			tabsDummy.setEffect(cardShadow);
-			historyDummy.setEffect(cardShadow);
-			settingsDummy.setEffect(cardShadow);
+		DropShadow cardShadow = new DropShadow();
+		cardShadow.setOffsetX(5);
+		cardShadow.setOffsetY(5);
+		cardShadow.setWidth(10);
+		cardShadow.setHeight(10);
+		Transition cardShadowTransition = new Transition() {
 
-			title.setEffect(cardShadow);
-			searchBar.setEffect(cardShadow);
+			{
+				setCycleDuration(Duration.millis(250));
+			}
+
+			@Override
+			protected void interpolate(double frac) {
+				cardShadow.setColor(new Color(0, 0, 0, frac));
+			}
+		};
+		shadowed.addListener((observable, oldValue, newValue) -> {
+
+			if (newValue) {
+				cardShadowTransition.pause();
+				cardShadowTransition.setRate(1);
+				cardShadowTransition.play();
+			} else {
+				cardShadowTransition.pause();
+				cardShadowTransition.setRate(-1);
+				cardShadowTransition.play();
+			}
+
 		});
+
+		// PROV Effects may wanna be removed when they're invisible.
+		viewDummy.setEffect(cardShadow);
+		tabsDummy.setEffect(cardShadow);
+		historyDummy.setEffect(cardShadow);
+		settingsDummy.setEffect(cardShadow);
+
+		title.setEffect(cardShadow);
+		searchBar.setEffect(cardShadow);
 
 	}
 
@@ -141,6 +170,7 @@ public class AdvancedHomePage implements Page {
 			else
 				shadowed.unbind();
 		});
+		shadowOnFocus.set(true);
 		return stage;
 	}
 
