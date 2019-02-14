@@ -1,16 +1,21 @@
 package zeale.applicationss.notesss.graphics.uis.pages;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -52,9 +57,25 @@ public class AdvancedHomePage implements Page {
 	private final ScrollPane scrollWrapper = new ScrollPane(root);
 	private final Scene scene = new Scene(scrollWrapper);
 
+	private final BooleanProperty shadowed = new SimpleBooleanProperty(),
+			shadowOnFocus = new SimpleBooleanProperty(false);
+	{
+		shadowed.addListener((observable, oldValue, newValue) -> {
+			DropShadow cardShadow = newValue ? new DropShadow(20, Color.BLACK) : null;
+			viewDummy.setEffect(cardShadow);
+			tabsDummy.setEffect(cardShadow);
+			historyDummy.setEffect(cardShadow);
+			settingsDummy.setEffect(cardShadow);
+
+			title.setEffect(cardShadow);
+			searchBar.setEffect(cardShadow);
+		});
+
+	}
+
 	{
 
-		final double bigBoxSize = 325, lilBoxSize = 275, boxMinSize = 200;
+		final double bigBoxSize = 300, lilBoxSize = 250, boxMinSize = 200;
 
 		final double bigBoxPrefWidth = bigBoxSize, bigBoxPrefHeight = bigBoxSize, lilBoxPrefWidth = lilBoxSize,
 				lilBoxPrefHeight = lilBoxSize;
@@ -112,8 +133,14 @@ public class AdvancedHomePage implements Page {
 	}
 
 	@Override
-	public Stage display(Stage stage, ApplicationProperties properties) {
+	public synchronized Stage display(Stage stage, ApplicationProperties properties) {
 		stage.setScene(scene);
+		shadowOnFocus.addListener((observable, oldValue, newValue) -> {
+			if (newValue)
+				shadowed.bind(stage.focusedProperty());
+			else
+				shadowed.unbind();
+		});
 		return stage;
 	}
 
