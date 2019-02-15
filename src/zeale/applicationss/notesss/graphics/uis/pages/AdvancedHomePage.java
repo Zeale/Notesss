@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -17,6 +18,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -26,6 +28,8 @@ import zeale.applicationss.notesss.utilities.Utilities;
 import zeale.applicationss.notesss.utilities.colors.ColorList;
 
 public class AdvancedHomePage implements Page {
+
+	private final DropShadow cardShadow = new DropShadow();
 
 	private final static Object LAYOUT_ITEM_PANE_KEY = new Object();
 
@@ -41,14 +45,23 @@ public class AdvancedHomePage implements Page {
 		return (StackPane) node.getProperties().get(LAYOUT_ITEM_PANE_KEY);
 	}
 
-	private final Pane viewDummy = new Pane(), tabsDummy = new Pane(), historyDummy = new Pane(),
-			settingsDummy = new Pane();
+	private final ImageView notesssIcon = new ImageView(
+			"/zeale/application/notesss/_resources/graphics/ui/pages/home/Notepad-v1-2.png");
+	private final Text notesssButtonLabel = new Text("My Notesss");
+	{
+		notesssIcon.setFitHeight(66);
+		notesssIcon.setFitWidth(50);
+		notesssIcon.setEffect(cardShadow);
+	}
+
+	private final VBox notesssBox = new VBox(5, notesssIcon, notesssButtonLabel);
+	private final Pane tabsDummy = new Pane(), historyDummy = new Pane(), settingsDummy = new Pane();
 
 	private final Text title = new Text("Notesss");
 	private final TextField searchBar = new TextField();
 
 	private final VBox titleBox = new VBox(20, title, searchBar);
-	private final VBox leftItemWrapping = new VBox(50, getItemPaneForLayout(Pos.BOTTOM_RIGHT, viewDummy),
+	private final VBox leftItemWrapping = new VBox(50, getItemPaneForLayout(Pos.BOTTOM_RIGHT, notesssBox),
 			getItemPaneForLayout(Pos.TOP_RIGHT, tabsDummy)),
 			rightItemWrapping = new VBox(50, getItemPaneForLayout(Pos.BOTTOM_LEFT, historyDummy),
 					getItemPaneForLayout(Pos.TOP_LEFT, settingsDummy));
@@ -61,7 +74,7 @@ public class AdvancedHomePage implements Page {
 	private final BooleanProperty shadowed = new SimpleBooleanProperty(),
 			shadowOnFocus = new SimpleBooleanProperty(false);
 	{
-		DropShadow cardShadow = new DropShadow();
+
 		cardShadow.setOffsetX(5);
 		cardShadow.setOffsetY(5);
 		cardShadow.setWidth(10);
@@ -92,7 +105,7 @@ public class AdvancedHomePage implements Page {
 		});
 
 		// PROV Effects may wanna be removed when they're invisible.
-		viewDummy.setEffect(cardShadow);
+		notesssBox.setEffect(cardShadow);
 		tabsDummy.setEffect(cardShadow);
 		historyDummy.setEffect(cardShadow);
 		settingsDummy.setEffect(cardShadow);
@@ -111,15 +124,15 @@ public class AdvancedHomePage implements Page {
 		final double boxMinWidth = boxMinSize, boxMinHeight = boxMinSize;
 
 		// DUMMY Dummy nodes.
-		viewDummy.setPrefSize(lilBoxPrefWidth, lilBoxPrefHeight);// TL
+		notesssBox.setPrefSize(lilBoxPrefWidth, lilBoxPrefHeight);// TL
 		tabsDummy.setPrefSize(bigBoxPrefWidth, bigBoxPrefHeight);// BL
 		historyDummy.setPrefSize(bigBoxPrefWidth, bigBoxPrefHeight);// TR
 		settingsDummy.setPrefSize(lilBoxPrefWidth, lilBoxPrefHeight);// BR
-		viewDummy.setMaxSize(lilBoxPrefWidth, lilBoxPrefHeight);// TL
+		notesssBox.setMaxSize(lilBoxPrefWidth, lilBoxPrefHeight);// TL
 		tabsDummy.setMaxSize(bigBoxPrefWidth, bigBoxPrefHeight);// BL
 		historyDummy.setMaxSize(bigBoxPrefWidth, bigBoxPrefHeight);// TR
 		settingsDummy.setMaxSize(lilBoxPrefWidth, lilBoxPrefHeight);// BR
-		viewDummy.setMinSize(boxMinWidth, boxMinHeight);
+		notesssBox.setMinSize(boxMinWidth, boxMinHeight);
 		tabsDummy.setMinSize(boxMinWidth, boxMinHeight);
 		historyDummy.setMinSize(boxMinWidth, boxMinHeight);
 		settingsDummy.setMinSize(boxMinWidth, boxMinHeight);
@@ -127,7 +140,13 @@ public class AdvancedHomePage implements Page {
 		ColorList<?> colorGenerator = Notesss.getColorGenerator();
 		Background firstForeground = Utilities.getBackgroundFromColor(colorGenerator.getf(0)),
 				secondForeground = Utilities.getBackgroundFromColor(colorGenerator.getf(1));
-		viewDummy.setBackground(firstForeground);
+
+		notesssBox.setBackground(firstForeground);
+		notesssButtonLabel.setFill(colorGenerator.getf(1));
+		notesssButtonLabel.setFont(Font.font(null, FontPosture.ITALIC, 28));
+		notesssButtonLabel.setEffect(cardShadow);
+		notesssBox.setAlignment(Pos.CENTER);
+
 		tabsDummy.setBackground(secondForeground);
 		historyDummy.setBackground(secondForeground);
 		settingsDummy.setBackground(firstForeground);
