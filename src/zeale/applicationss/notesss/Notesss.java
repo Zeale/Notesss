@@ -74,7 +74,7 @@ public class Notesss {
 		JavaFXNotesLauncher.launchNotesss(args);
 	}
 
-	private static ColorList<?> colorGenerator = ColorList.ORANGE_BLUE_BLACK;
+	private static ColorList<?> colorGenerator = ColorList.PURE;
 
 	public static void setColorGenerator(ColorList<?> colorGenerator) {
 		if (colorGenerator == null)
