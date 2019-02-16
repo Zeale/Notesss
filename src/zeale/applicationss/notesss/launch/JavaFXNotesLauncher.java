@@ -5,7 +5,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import zeale.applicationss.notesss.graphics.uis.pages.AdvancedHomePage;
+import zeale.applicationss.notesss.graphics.uis.pages.HomePage;
 
 public class JavaFXNotesLauncher extends Application {
 
@@ -15,7 +15,7 @@ public class JavaFXNotesLauncher extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		new AdvancedHomePage().display(primaryStage);
+		new HomePage().display(primaryStage);
 		primaryStage.show();
 		primaryStage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
 		primaryStage.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
