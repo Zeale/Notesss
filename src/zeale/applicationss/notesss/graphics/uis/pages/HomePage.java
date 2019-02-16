@@ -1,137 +1,92 @@
 package zeale.applicationss.notesss.graphics.uis.pages;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.control.TextArea;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.animation.Transition;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import zeale.applicationss.notesss.ApplicationProperties;
 import zeale.applicationss.notesss.Notesss;
+import zeale.applicationss.notesss.graphics.uis.pages.templates.CoverLayout;
 
-// Fullscreen will have a side menu, window mode will have a regular menu bar.
-public class HomePage implements Page {
+public class HomePage extends CoverLayout {
+	private final DropShadow cardShadow = new DropShadow();
 
-	private final Text title = new Text("Notesss");
-	private final TextArea input = new TextArea();
-
-	private final AnchorPane root = new AnchorPane();
+	private final ImageView notesssIcon = new ImageView(
+			"/zeale/application/notesss/_resources/graphics/ui/pages/home/Notepad-v1-2.png");
+	private final Text notesssButtonLabel = new Text("My Notesss");
 	{
-		VBox wrapper = new VBox(30d, title, input);
-		wrapper.setAlignment(Pos.CENTER);
-
-		root.getChildren().add(wrapper);
-
-		title.setFont(Font.font(72));
-		title.setFill(Color.LIGHTGRAY);
-
-		input.setPrefSize(800, 600);
-
-		AnchorPane.setLeftAnchor(wrapper, 50d);
-		AnchorPane.setRightAnchor(wrapper, 50d);
-		AnchorPane.setTopAnchor(wrapper, 25d);
-		AnchorPane.setBottomAnchor(wrapper, 25d);
-	}
-	private final ScrollPane rootScroll = new ScrollPane(root);
-	{
-		rootScroll.setFitToHeight(false);
-		rootScroll.setFitToWidth(true);
-		rootScroll.setHbarPolicy(ScrollBarPolicy.NEVER);
+		notesssIcon.setFitHeight(66);
+		notesssIcon.setFitWidth(50);
+		notesssIcon.setEffect(cardShadow);
 	}
 
-	private final MenuItem save = new MenuItem("Save"), load = new MenuItem("Load");
-	private final Menu fileMenu = new Menu("File", null, save, load);
-	private final MenuItem copy = new MenuItem("Copy"), cut = new MenuItem("Cut"), paste = new MenuItem("Paste"),
-			selectAll = new MenuItem("Select All"), delete = new MenuItem("Delete"), clear = new MenuItem("Clear");
+	private final BooleanProperty shadowed = new SimpleBooleanProperty(),
+			shadowOnFocus = new SimpleBooleanProperty(false);
 	{
-		copy.setOnAction(event -> {
-			String text = input.getSelectedText();
-			if (text == null || text.isEmpty())
-				return;
 
-			Clipboard clipboard = Clipboard.getSystemClipboard();
-			ClipboardContent content = new ClipboardContent();
-			content.putString(text);
-			clipboard.setContent(content);
+		cardShadow.setOffsetX(5);
+		cardShadow.setOffsetY(5);
+		cardShadow.setWidth(10);
+		cardShadow.setHeight(10);
+		Transition cardShadowTransition = new Transition() {
 
-		});
-		cut.setOnAction(event -> {
-			String text = input.getSelectedText();
-			if (text == null || text.isEmpty())
-				return;
-
-			Clipboard clipboard = Clipboard.getSystemClipboard();
-			ClipboardContent content = new ClipboardContent();
-			content.putString(text);
-			clipboard.setContent(content);
-
-			input.replaceSelection("");
-		});
-	}
-	private final Menu editMenu = new Menu("Edit", null, copy, cut, paste, selectAll, delete, clear);
-	private final MenuBar menubar = new MenuBar(fileMenu, editMenu);
-	private final BorderPane wrapper = new BorderPane(rootScroll);
-	private Stage stage;
-	{
-		save.setOnAction(event -> {
-			File out = new FileChooser().showSaveDialog(stage);
-			if (out == null)
-				return;
-			try (PrintWriter writer = new PrintWriter(new FileOutputStream(out))) {
-				writer.print(input.getText());
-			} catch (FileNotFoundException e) {
-				PrintWriter errOut = Notesss.CONSOLE.getWriter();
-				e.printStackTrace(errOut);
-				errOut.close();
-			}
-		});
-
-		load.setOnAction(event -> {
-			File in = new FileChooser().showOpenDialog(stage);
-			if (in == null)
-				return;
-			StringBuilder builder = new StringBuilder();
-			try (BufferedInputStream reader = new BufferedInputStream(new FileInputStream(in))) {
-				int c;
-				while ((c = reader.read()) != -1)
-					builder.append((char) c);
-			} catch (IOException e) {
-				PrintWriter errOut = Notesss.CONSOLE.getWriter();
-				e.printStackTrace(errOut);
-				errOut.close();
+			{
+				setCycleDuration(Duration.millis(250));
 			}
 
-			input.setText(builder.toString());
+			@Override
+			protected void interpolate(double frac) {
+				cardShadow.setColor(new Color(0, 0, 0, frac));
+			}
+		};
+		shadowed.addListener((observable, oldValue, newValue) -> {
+
+			if (newValue) {
+				cardShadowTransition.pause();
+				cardShadowTransition.setRate(1);
+				cardShadowTransition.play();
+			} else {
+				cardShadowTransition.pause();
+				cardShadowTransition.setRate(-1);
+				cardShadowTransition.play();
+			}
+
 		});
-		wrapper.setTop(menubar);
+
+		// PROV Effects may wanna be removed when they're invisible.
+		topLeftSquare.setEffect(cardShadow);
+		topRightSquare.setEffect(cardShadow);
+		bottomRightSquare.setEffect(cardShadow);
+		bottomLeftSquare.setEffect(cardShadow);
+
+		title.setEffect(cardShadow);
+		searchBar.setEffect(cardShadow);
+
+		notesssButtonLabel.setFill(Notesss.getColorGenerator().getf(1));
+		notesssButtonLabel.setFont(Font.font(null, 28));
+		notesssButtonLabel.setStrokeWidth(0.5);
+		notesssButtonLabel.setStroke(Notesss.getColorGenerator().getf(1));
+		notesssButtonLabel.setEffect(cardShadow);
+
+		topLeftSquare.getChildren().addAll(notesssIcon, notesssButtonLabel);
+		topLeftSquare.setSpacing(5);
 	}
-	private final Scene scene = new Scene(wrapper);
 
 	@Override
-	public Stage display(Stage stage, ApplicationProperties properties) {
-		this.stage = stage;
-		stage.setScene(scene);
-		return stage;
+	public synchronized Stage display(Stage stage, ApplicationProperties properties) {
+		shadowOnFocus.addListener((observable, oldValue, newValue) -> {
+			if (newValue)
+				shadowed.bind(stage.focusedProperty());
+			else
+				shadowed.unbind();
+		});
+		shadowOnFocus.set(true);
+		return super.display(stage, properties);
 	}
-
 }
