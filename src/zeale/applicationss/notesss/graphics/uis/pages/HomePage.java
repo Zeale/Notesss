@@ -19,7 +19,7 @@ public class HomePage extends CoverLayout {
 
 	private final ImageView notesssIcon = new ImageView(
 			"/zeale/application/notesss/_resources/graphics/ui/pages/home/Notepad-v1-2.png");
-	private final Text notesssButtonLabel = new Text("My Notesss");
+	private final Text notesssButtonLabel = new Text("My Notes");
 	{
 		notesssIcon.setFitHeight(66);
 		notesssIcon.setFitWidth(50);
@@ -68,10 +68,10 @@ public class HomePage extends CoverLayout {
 		title.setEffect(cardShadow);
 		searchBar.setEffect(cardShadow);
 
-		notesssButtonLabel.setFill(Notesss.getColorGenerator().getf(1));
+		notesssButtonLabel.setFill(Notesss.getColorGenerator().getf(2));
 		notesssButtonLabel.setFont(Font.font(null, 28));
-		notesssButtonLabel.setStrokeWidth(0.5);
-		notesssButtonLabel.setStroke(Notesss.getColorGenerator().getf(1));
+		notesssButtonLabel.setStrokeWidth(0.8);
+		notesssButtonLabel.setStroke(Notesss.getColorGenerator().getf(2));
 		notesssButtonLabel.setEffect(cardShadow);
 
 		topLeftSquare.getChildren().addAll(notesssIcon, notesssButtonLabel);
