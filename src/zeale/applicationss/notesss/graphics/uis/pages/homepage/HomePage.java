@@ -3,11 +3,19 @@ package zeale.applicationss.notesss.graphics.uis.pages.homepage;
 import javafx.animation.Transition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Effect;
+import javafx.scene.effect.Glow;
+import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.transform.Transform;
+import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import zeale.applicationss.notesss.ApplicationProperties;
@@ -59,7 +67,6 @@ public class HomePage extends CoverLayout {
 
 		});
 
-		// PROV Effects may wanna be removed when they're invisible.
 		topLeftSquare.setEffect(cardShadow);
 		topRightSquare.setEffect(cardShadow);
 		bottomRightSquare.setEffect(cardShadow);
@@ -76,6 +83,60 @@ public class HomePage extends CoverLayout {
 
 		topLeftSquare.getChildren().addAll(notesssIcon, notesssButtonLabel);
 		topLeftSquare.setSpacing(5);
+
+		applyMouseEffects(cardShadow, topLeftSquare, topRightSquare, bottomLeftSquare, bottomRightSquare);
+
+	}
+
+	private static final void applyMouseEffects(Effect defaultShadow, Node... nodes) {
+
+		Transform clickShadowShift = new Translate(5, 5);
+		InnerShadow clickShadow = new InnerShadow();
+
+		Glow glow = new Glow();
+		glow.setInput(defaultShadow);
+		clickShadow.setOffsetX(5);
+		clickShadow.setOffsetY(5);
+		clickShadow.setWidth(10);
+		clickShadow.setHeight(10);
+
+		for (Node n : nodes)
+			new Object() {
+				boolean clicking;
+				{
+					n.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+						glow.setInput(clickShadow);
+						n.setEffect(glow);
+						if (n instanceof Parent)
+							for (Node n : ((Parent) n).getChildrenUnmodifiable())
+								if (!n.getTransforms().contains(clickShadowShift))
+									n.getTransforms().add(clickShadowShift);
+						clicking = true;
+					});
+					n.addEventFilter(MouseEvent.MOUSE_RELEASED, event -> {
+						glow.setInput(defaultShadow);
+						if (n instanceof Parent)
+							for (Node n : ((Parent) n).getChildrenUnmodifiable())
+								n.getTransforms().remove(clickShadowShift);
+						clicking = false;
+					});
+
+					n.addEventFilter(MouseEvent.MOUSE_ENTERED, event -> {
+						n.setEffect(glow);
+						if (clicking)
+							if (n instanceof Parent)
+								for (Node n : ((Parent) n).getChildrenUnmodifiable())
+									if (!n.getTransforms().contains(clickShadowShift))
+										n.getTransforms().add(clickShadowShift);
+					});
+					n.addEventFilter(MouseEvent.MOUSE_EXITED, event -> {
+						n.setEffect(defaultShadow);
+						if (n instanceof Parent)
+							for (Node n : ((Parent) n).getChildrenUnmodifiable())
+								n.getTransforms().remove(clickShadowShift);
+					});
+				}
+			};
 	}
 
 	@Override
