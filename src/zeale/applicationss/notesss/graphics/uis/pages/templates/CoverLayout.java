@@ -94,6 +94,7 @@ public class CoverLayout implements Page {
 //		HBox.setMargin(leftItemWrapping, new Insets(20, 0, 0, 0));
 
 		root.setBackground(Utilities.getBackgroundFromColor(colorGenerator.getb(0)));
+		scrollWrapper.setBackground(Utilities.getBackgroundFromColor(colorGenerator.getb(0)));
 		Utilities.setAllAnchors(0d, root);
 		titleBox.setFillWidth(false);
 		titleBox.setAlignment(Pos.CENTER);
