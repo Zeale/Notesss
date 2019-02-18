@@ -5,7 +5,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import zeale.applicationss.notesss.graphics.uis.pages.HomePage;
+import zeale.applicationss.notesss.graphics.uis.pages.homepage.HomePage;
 
 public class JavaFXNotesLauncher extends Application {
 

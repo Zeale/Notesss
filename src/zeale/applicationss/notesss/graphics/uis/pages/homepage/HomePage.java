@@ -1,4 +1,4 @@
-package zeale.applicationss.notesss.graphics.uis.pages;
+package zeale.applicationss.notesss.graphics.uis.pages.homepage;
 
 import javafx.animation.Transition;
 import javafx.beans.property.BooleanProperty;
