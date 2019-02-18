@@ -2,9 +2,12 @@ package zeale.applicationss.notesss.utilities;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 import javafx.application.Platform;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -26,6 +29,19 @@ public final class Utilities {
 
 	public static Border getBorderFromColor(Paint color, double width) {
 		return new Border(new BorderStroke(color, BorderStrokeStyle.SOLID, null, new BorderWidths(width)));
+	}
+
+	public static List<Node> deepGetChildren(Node parent) {
+		return deepGetChildren(new LinkedList<>(), parent);
+	}
+
+	public static List<Node> deepGetChildren(List<Node> list, Node parent) {
+		if (parent instanceof Parent)
+			for (Node n : ((Parent) parent).getChildrenUnmodifiable()) {
+				list.add(n);
+				deepGetChildren(list, n);
+			}
+		return list;
 	}
 
 	public static final void setAllAnchors(Double top, Double left, Double right, Double bottom, Node... nodes) {
