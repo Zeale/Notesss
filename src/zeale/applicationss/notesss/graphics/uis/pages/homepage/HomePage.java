@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import zeale.applicationss.notesss.ApplicationProperties;
 import zeale.applicationss.notesss.Notesss;
+import zeale.applicationss.notesss.graphics.uis.pages.NoteEditorPage;
 import zeale.applicationss.notesss.graphics.uis.pages.templates.CoverLayout;
 
 public class HomePage extends CoverLayout {
@@ -34,6 +35,7 @@ public class HomePage extends CoverLayout {
 		notesssIcon.setEffect(cardShadow);
 	}
 
+	private Stage stage;
 	private final BooleanProperty shadowed = new SimpleBooleanProperty(),
 			shadowOnFocus = new SimpleBooleanProperty(false);
 	{
@@ -85,6 +87,7 @@ public class HomePage extends CoverLayout {
 		topLeftSquare.setSpacing(5);
 
 		applyMouseEffects(cardShadow, topLeftSquare, topRightSquare, bottomLeftSquare, bottomRightSquare);
+		topLeftSquare.setOnMouseClicked(event -> new NoteEditorPage().display(stage));
 
 	}
 
@@ -148,6 +151,7 @@ public class HomePage extends CoverLayout {
 				shadowed.unbind();
 		});
 		shadowOnFocus.set(true);
+		this.stage = stage;
 		return super.display(stage, properties);
 	}
 }
