@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
+import zeale.applicationss.notesss.ApplicationProperties.PropertyEditor;
 import zeale.applicationss.notesss.launch.JavaFXNotesLauncher;
 import zeale.applicationss.notesss.utilities.Utilities;
 import zeale.applicationss.notesss.utilities.colors.ColorList;
@@ -56,8 +56,14 @@ public class Notesss {
 
 	public static StandardConsole CONSOLE = new StandardConsole();
 
-	public static ApplicationProperties properties() {
-		return ApplicationProperties.getDefault();
+	private static final PropertyEditor DEFAULT_APPLICATION_PROPERTIES = ApplicationProperties.instance();
+
+	public static final ApplicationProperties properties() {
+		return DEFAULT_APPLICATION_PROPERTIES.properties();
+	}
+
+	private static final PropertyEditor editor() {
+		return DEFAULT_APPLICATION_PROPERTIES;
 	}
 
 	private static final double DEFAULT_BASE_WINDOW_WIDTH = 1920, DEFAULT_BASE_WINDOW_HEIGHT = 1080;
@@ -74,20 +80,10 @@ public class Notesss {
 		JavaFXNotesLauncher.launchNotesss(args);
 	}
 
-	private static ColorList<?> colorGenerator = ColorList.PURE;
-
 	public static void setColorGenerator(ColorList<?> colorGenerator) {
 		if (colorGenerator == null)
 			throw new IllegalArgumentException();
-		Notesss.colorGenerator = colorGenerator;
-	}
-
-	public static ColorList<?> getColorGenerator() {
-		return colorGenerator;
-	}
-
-	public static final Paint getNextColor() {
-		return colorGenerator.next();
+		editor().setColorGenerator(colorGenerator);
 	}
 
 	public static OutputStream streamOut(String path) throws FileNotFoundException {

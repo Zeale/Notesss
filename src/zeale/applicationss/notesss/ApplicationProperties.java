@@ -1,6 +1,7 @@
 package zeale.applicationss.notesss;
 
 import zeale.applicationss.notesss.graphics.uis.pages.Page;
+import zeale.applicationss.notesss.utilities.colors.ColorList;
 
 /**
  * <p>
@@ -23,6 +24,12 @@ public class ApplicationProperties {
 	public static PropertyEditor instance() {
 		return new ApplicationProperties().new PropertyEditor();
 	}
+	
+	private ColorList<?> colorGenerator = ColorList.PURE;
+
+	public ColorList<?> getColorGenerator() {
+		return colorGenerator;
+	}
 
 	public class PropertyEditor {
 		public ApplicationProperties properties() {
@@ -30,5 +37,9 @@ public class ApplicationProperties {
 		}
 		
 		private PropertyEditor() {	}
+		
+		public void setColorGenerator(ColorList<?> colorGenerator) {
+			properties().colorGenerator = colorGenerator;
+		}
 	}
 }

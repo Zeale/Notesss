@@ -15,7 +15,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import zeale.applicationss.notesss.ApplicationProperties;
-import zeale.applicationss.notesss.Notesss;
 import zeale.applicationss.notesss.graphics.uis.pages.Page;
 import zeale.applicationss.notesss.utilities.Utilities;
 import zeale.applicationss.notesss.utilities.colors.ColorList;
@@ -75,17 +74,7 @@ public class CoverLayout implements Page {
 		topRightSquare.setMinSize(boxMinWidth, boxMinHeight);
 		bottomRightSquare.setMinSize(boxMinWidth, boxMinHeight);
 
-		ColorList<?> colorGenerator = Notesss.getColorGenerator();
-		Background firstForeground = Utilities.getBackgroundFromColor(colorGenerator.getf(0)),
-				secondForeground = Utilities.getBackgroundFromColor(colorGenerator.getf(1));
-
-		topLeftSquare.setBackground(firstForeground);
-
 		topLeftSquare.setAlignment(Pos.CENTER);
-
-		bottomLeftSquare.setBackground(secondForeground);
-		topRightSquare.setBackground(secondForeground);
-		bottomRightSquare.setBackground(firstForeground);
 
 //		VBox.setMargin(getLayoutItemPane(viewDummy), new Insets(0, 0, 0, 50));
 //		VBox.setMargin(getLayoutItemPane(settingsDummy), new Insets(0, 50, 0, 0));
@@ -93,8 +82,6 @@ public class CoverLayout implements Page {
 		// Shift left column down a little.
 //		HBox.setMargin(leftItemWrapping, new Insets(20, 0, 0, 0));
 
-		root.setBackground(Utilities.getBackgroundFromColor(colorGenerator.getb(0)));
-		scrollWrapper.setBackground(Utilities.getBackgroundFromColor(colorGenerator.getb(0)));
 		Utilities.setAllAnchors(0d, root);
 		titleBox.setFillWidth(false);
 		titleBox.setAlignment(Pos.CENTER);
@@ -108,11 +95,8 @@ public class CoverLayout implements Page {
 		/////////////////////////////////////////////////////////////////////////////////////
 
 		searchBar.setPrefWidth(600);
-		searchBar.setBackground(Utilities.getBackgroundFromColor(colorGenerator.getf(2)));
 
 		title.setFont(Font.font(60));
-		title.setFill(colorGenerator.getf(2));
-		title.setStroke(colorGenerator.getf(2));
 		title.setStrokeWidth(1.4);
 
 	}
@@ -120,6 +104,27 @@ public class CoverLayout implements Page {
 	@Override
 	public synchronized Stage display(Stage stage, ApplicationProperties properties) {
 		stage.setScene(scene);
+
+		//////////////////////////////////////
+		// Styling using ApplicationProperties
+		ColorList<?> colorGenerator = properties.getColorGenerator();
+		Background firstForeground = Utilities.getBackgroundFromColor(colorGenerator.getf(0)),
+				secondForeground = Utilities.getBackgroundFromColor(colorGenerator.getf(1));
+
+		topLeftSquare.setBackground(firstForeground);
+		bottomLeftSquare.setBackground(secondForeground);
+		topRightSquare.setBackground(secondForeground);
+		bottomRightSquare.setBackground(firstForeground);
+
+		root.setBackground(Utilities.getBackgroundFromColor(colorGenerator.getb(0)));
+		scrollWrapper.setBackground(Utilities.getBackgroundFromColor(colorGenerator.getb(0)));
+
+		searchBar.setBackground(Utilities.getBackgroundFromColor(colorGenerator.getf(2)));
+
+		title.setFill(colorGenerator.getf(2));
+		title.setStroke(colorGenerator.getf(2));
+		// Styling using ApplicationProperties
+		//////////////////////////////////////
 		return stage;
 	}
 
