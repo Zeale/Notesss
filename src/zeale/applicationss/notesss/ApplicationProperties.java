@@ -1,6 +1,7 @@
 package zeale.applicationss.notesss;
 
 import zeale.applicationss.notesss.graphics.uis.pages.Page;
+import zeale.applicationss.notesss.utilities.colors.ColorList;
 
 /**
  * <p>
@@ -18,27 +19,27 @@ import zeale.applicationss.notesss.graphics.uis.pages.Page;
  */
 public class ApplicationProperties {
 
-	private static ApplicationProperties defaultProperties;
-
-	static ApplicationProperties getDefault() {
-		return defaultProperties == null ? (defaultProperties = buildDefProps()) : defaultProperties;
-	}
-
-	private static ApplicationProperties buildDefProps() {
-		return new ApplicationProperties();
-	}
-
-	private ApplicationProperties() {
-
-	}
-
-	public static PropertyEditor properties() {
+	private ApplicationProperties() {	}
+	
+	public static PropertyEditor instance() {
 		return new ApplicationProperties().new PropertyEditor();
+	}
+	
+	private ColorList<?> colorGenerator = ColorList.PURE;
+
+	public ColorList<?> getColorGenerator() {
+		return colorGenerator;
 	}
 
 	public class PropertyEditor {
 		public ApplicationProperties properties() {
 			return ApplicationProperties.this;
+		}
+		
+		private PropertyEditor() {	}
+		
+		public void setColorGenerator(ColorList<?> colorGenerator) {
+			properties().colorGenerator = colorGenerator;
 		}
 	}
 }

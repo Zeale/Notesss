@@ -12,6 +12,7 @@ import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.transform.Transform;
@@ -19,7 +20,6 @@ import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import zeale.applicationss.notesss.ApplicationProperties;
-import zeale.applicationss.notesss.Notesss;
 import zeale.applicationss.notesss.graphics.uis.pages.NoteEditorPage;
 import zeale.applicationss.notesss.graphics.uis.pages.templates.CoverLayout;
 
@@ -77,10 +77,8 @@ public class HomePage extends CoverLayout {
 		title.setEffect(cardShadow);
 		searchBar.setEffect(cardShadow);
 
-		notesssButtonLabel.setFill(Notesss.getColorGenerator().getf(2));
 		notesssButtonLabel.setFont(Font.font(null, 28));
 		notesssButtonLabel.setStrokeWidth(0.8);
-		notesssButtonLabel.setStroke(Notesss.getColorGenerator().getf(2));
 		notesssButtonLabel.setEffect(cardShadow);
 
 		topLeftSquare.getChildren().addAll(notesssIcon, notesssButtonLabel);
@@ -152,6 +150,12 @@ public class HomePage extends CoverLayout {
 		});
 		shadowOnFocus.set(true);
 		this.stage = stage;
+
+		// Styling using ApplicationProperties instance.
+		Paint color = properties.getColorGenerator().getf(2);
+		notesssButtonLabel.setFill(color);
+		notesssButtonLabel.setStroke(color);
+
 		return super.display(stage, properties);
 	}
 }
