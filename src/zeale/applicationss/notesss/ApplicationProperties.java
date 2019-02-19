@@ -18,21 +18,9 @@ import zeale.applicationss.notesss.graphics.uis.pages.Page;
  */
 public class ApplicationProperties {
 
-	private static ApplicationProperties defaultProperties;
-
-	static ApplicationProperties getDefault() {
-		return defaultProperties == null ? (defaultProperties = buildDefProps()) : defaultProperties;
-	}
-
-	private static ApplicationProperties buildDefProps() {
-		return new ApplicationProperties();
-	}
-
-	private ApplicationProperties() {
-
-	}
-
-	public static PropertyEditor properties() {
+	private ApplicationProperties() {	}
+	
+	public static PropertyEditor instance() {
 		return new ApplicationProperties().new PropertyEditor();
 	}
 
@@ -40,5 +28,7 @@ public class ApplicationProperties {
 		public ApplicationProperties properties() {
 			return ApplicationProperties.this;
 		}
+		
+		private PropertyEditor() {	}
 	}
 }
