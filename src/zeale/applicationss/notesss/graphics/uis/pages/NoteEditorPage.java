@@ -13,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import zeale.applicationss.notesss.ApplicationProperties;
+import zeale.applicationss.notesss.Notesss;
 import zeale.applicationss.notesss.utilities.Utilities;
 
 public class NoteEditorPage implements Page {
@@ -38,9 +39,14 @@ public class NoteEditorPage implements Page {
 	public Stage display(Stage stage, ApplicationProperties properties) {
 		stage.setScene(scene);
 		menubar.setBackground(getBackgroundFromColor(properties.getColorGenerator().getf(1)));
-		Node physicalInput = input.lookup(".content");
-		if (physicalInput instanceof Region)
-			((Region) physicalInput).setBackground(getBackgroundFromColor(properties.getColorGenerator().getf(2)));
+		try {
+			Node physicalInput = input.lookup(".content");
+			if (physicalInput instanceof Region)
+				((Region) physicalInput).setBackground(getBackgroundFromColor(properties.getColorGenerator().getf(2)));
+		} catch (Exception e) {
+			Notesss.error(
+					"Failed to apply some styling. Looking up TextArea's .content node returned a valid Region, but failed to execute. (PL-DP~10");
+		}
 		root.setBackground(getBackgroundFromColor(properties.getColorGenerator().getb(0)));
 		input.setBackground(getBackgroundFromColor(properties.getColorGenerator().getf(2)));
 //		input.setBorder(Utilities.getBorderFromColor(properties.getColorGenerator().getf(0), 5));

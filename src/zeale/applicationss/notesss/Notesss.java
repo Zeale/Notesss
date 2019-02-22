@@ -6,12 +6,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 
 import javafx.scene.paint.Color;
 import zeale.applicationss.notesss.ApplicationProperties.PropertyEditor;
 import zeale.applicationss.notesss.launch.JavaFXNotesLauncher;
 import zeale.applicationss.notesss.utilities.Utilities;
 import zeale.applicationss.notesss.utilities.colors.ColorList;
+import zeale.apps.tools.console.Console;
 import zeale.apps.tools.console.std.StandardConsole;
 
 /**
@@ -54,12 +56,25 @@ public class Notesss {
 	private static final String DEFAULT_FILESTORAGE_PATH = System.getProperty("user.home", "C:/Program Files")
 			+ "/Notesss/File Storage";
 
-	public static StandardConsole CONSOLE = new StandardConsole();
+	public static Console<?> CONSOLE = new StandardConsole();
 
 	private static final PropertyEditor DEFAULT_APPLICATION_PROPERTIES = ApplicationProperties.instance();
 
 	public static final ApplicationProperties properties() {
 		return DEFAULT_APPLICATION_PROPERTIES.properties();
+	}
+
+	public static void error(Throwable error, String message) {
+		if (CONSOLE instanceof StandardConsole) {
+			PrintWriter writer = ((StandardConsole) CONSOLE).getWriter();
+			error.printStackTrace(writer);
+			writer.close();
+		} else
+			Notesss.error(message);
+	}
+
+	public static void error(Throwable error) {
+		error(error, error.getMessage());
 	}
 
 	private static final PropertyEditor editor() {

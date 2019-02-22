@@ -28,6 +28,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import zeale.applicationss.notesss.ApplicationProperties;
 import zeale.applicationss.notesss.Notesss;
+import zeale.apps.tools.console.std.StandardConsole;
 
 // Fullscreen will have a side menu, window mode will have a regular menu bar.
 public class LegacyHomePage implements Page {
@@ -100,9 +101,7 @@ public class LegacyHomePage implements Page {
 			try (PrintWriter writer = new PrintWriter(new FileOutputStream(out))) {
 				writer.print(input.getText());
 			} catch (FileNotFoundException e) {
-				PrintWriter errOut = Notesss.CONSOLE.getWriter();
-				e.printStackTrace(errOut);
-				errOut.close();
+				Notesss.error(e);
 			}
 		});
 
@@ -116,9 +115,7 @@ public class LegacyHomePage implements Page {
 				while ((c = reader.read()) != -1)
 					builder.append((char) c);
 			} catch (IOException e) {
-				PrintWriter errOut = Notesss.CONSOLE.getWriter();
-				e.printStackTrace(errOut);
-				errOut.close();
+				Notesss.error(e);
 			}
 
 			input.setText(builder.toString());
