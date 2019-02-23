@@ -13,33 +13,35 @@ import zeale.applicationss.notesss.utilities.colors.ColorList;
  * <p>
  * <u>{@link ApplicationProperties} are immutable, apart from the .</u>
  * </p>
- * 
+ *
  * @author Zeale
  *
  */
 public class ApplicationProperties {
 
-	private ApplicationProperties() {	}
-	
-	public static PropertyEditor instance() {
-		return new ApplicationProperties().new PropertyEditor();
-	}
-	
-	private ColorList<?> colorGenerator = ColorList.PURE;
-
-	public ColorList<?> getColorGenerator() {
-		return colorGenerator;
-	}
-
 	public class PropertyEditor {
+		private PropertyEditor() {
+		}
+
 		public ApplicationProperties properties() {
 			return ApplicationProperties.this;
 		}
-		
-		private PropertyEditor() {	}
-		
+
 		public void setColorGenerator(ColorList<?> colorGenerator) {
 			properties().colorGenerator = colorGenerator;
 		}
+	}
+
+	public static PropertyEditor instance() {
+		return new ApplicationProperties().new PropertyEditor();
+	}
+
+	private ColorList<?> colorGenerator = ColorList.PURE;
+
+	private ApplicationProperties() {
+	}
+
+	public ColorList<?> getColorGenerator() {
+		return colorGenerator;
 	}
 }

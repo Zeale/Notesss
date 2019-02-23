@@ -28,7 +28,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import zeale.applicationss.notesss.ApplicationProperties;
 import zeale.applicationss.notesss.Notesss;
-import zeale.apps.tools.console.std.StandardConsole;
 
 // Fullscreen will have a side menu, window mode will have a regular menu bar.
 public class LegacyHomePage implements Page {

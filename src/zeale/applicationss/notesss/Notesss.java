@@ -30,28 +30,12 @@ import zeale.apps.tools.console.std.StandardConsole;
  * Functions and code that are not application-specific, will be stored in
  * {@link Utilities}, or a sibling/sibling-child class/package.
  * </p>
- * 
+ *
  * @author Zeale
  *
  */
 // TODO Make app download/set up its own dependencies bc it makes me feel better about myself.
 public class Notesss {
-
-	public static void error(String text) {
-		CONSOLE.println(text, Color.FIREBRICK);
-	}
-
-	public static void std(String text) {
-		CONSOLE.println(text, Color.DEEPSKYBLUE);
-	}
-
-	public static void info(String text) {
-		CONSOLE.println(text, Color.GREEN);
-	}
-
-	public static void warn(String text) {
-		CONSOLE.println(text, Color.GOLD);
-	}
 
 	private static final String DEFAULT_FILESTORAGE_PATH = System.getProperty("user.home", "C:/Program Files")
 			+ "/Notesss/File Storage";
@@ -60,8 +44,22 @@ public class Notesss {
 
 	private static final PropertyEditor DEFAULT_APPLICATION_PROPERTIES = ApplicationProperties.instance();
 
-	public static final ApplicationProperties properties() {
-		return DEFAULT_APPLICATION_PROPERTIES.properties();
+	private static final double DEFAULT_BASE_WINDOW_WIDTH = 1920, DEFAULT_BASE_WINDOW_HEIGHT = 1080;
+
+	// PROV This sort of API (with a Utilities object) may not be very pleasing in
+	// practice, so it's been marked as provisional.
+	public static final Utilities utilities = new Utilities(DEFAULT_BASE_WINDOW_WIDTH, DEFAULT_BASE_WINDOW_HEIGHT);
+
+	private static final PropertyEditor editor() {
+		return DEFAULT_APPLICATION_PROPERTIES;
+	}
+
+	public static void error(String text) {
+		CONSOLE.println(text, Color.FIREBRICK);
+	}
+
+	public static void error(Throwable error) {
+		error(error, error.getMessage());
 	}
 
 	public static void error(Throwable error, String message) {
@@ -73,26 +71,20 @@ public class Notesss {
 			Notesss.error(message);
 	}
 
-	public static void error(Throwable error) {
-		error(error, error.getMessage());
-	}
-
-	private static final PropertyEditor editor() {
-		return DEFAULT_APPLICATION_PROPERTIES;
-	}
-
-	private static final double DEFAULT_BASE_WINDOW_WIDTH = 1920, DEFAULT_BASE_WINDOW_HEIGHT = 1080;
-
-	// PROV This sort of API (with a Utilities object) may not be very pleasing in
-	// practice, so it's been marked as provisional.
-	public static final Utilities utilities = new Utilities(DEFAULT_BASE_WINDOW_WIDTH, DEFAULT_BASE_WINDOW_HEIGHT);
-
 	public static Utilities getUtilities() {
 		return utilities;
 	}
 
+	public static void info(String text) {
+		CONSOLE.println(text, Color.GREEN);
+	}
+
 	public static void main(String[] args) {
 		JavaFXNotesLauncher.launchNotesss(args);
+	}
+
+	public static final ApplicationProperties properties() {
+		return DEFAULT_APPLICATION_PROPERTIES.properties();
 	}
 
 	public static void setColorGenerator(ColorList<?> colorGenerator) {
@@ -101,12 +93,20 @@ public class Notesss {
 		editor().setColorGenerator(colorGenerator);
 	}
 
-	public static OutputStream streamOut(String path) throws FileNotFoundException {
-		return new FileOutputStream(new File(DEFAULT_FILESTORAGE_PATH, path));
+	public static void std(String text) {
+		CONSOLE.println(text, Color.DEEPSKYBLUE);
 	}
 
 	public static InputStream streamIn(String path) throws FileNotFoundException {
 		return new FileInputStream(new File(DEFAULT_FILESTORAGE_PATH, path));
+	}
+
+	public static OutputStream streamOut(String path) throws FileNotFoundException {
+		return new FileOutputStream(new File(DEFAULT_FILESTORAGE_PATH, path));
+	}
+
+	public static void warn(String text) {
+		CONSOLE.println(text, Color.GOLD);
 	}
 
 }

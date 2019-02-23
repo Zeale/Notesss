@@ -13,6 +13,10 @@ public class JavaFXNotesLauncher extends Application {
 		Application.launch(args);
 	}
 
+	public static void main(String[] args) {
+		launchNotesss(args);
+	}
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		new HomePage().display(primaryStage);
@@ -22,10 +26,6 @@ public class JavaFXNotesLauncher extends Application {
 			if (KeyCode.F11 == event.getCode())
 				primaryStage.setFullScreen(!primaryStage.isFullScreen());
 		});
-	}
-
-	public static void main(String[] args) {
-		launchNotesss(args);
 	}
 
 }

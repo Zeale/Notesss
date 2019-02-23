@@ -5,7 +5,7 @@ import java.util.Iterator;
 /**
  * An implementation of a {@link Generator} that returns <code>null</code> to
  * signify that it has finished.
- * 
+ *
  * @author Zeale
  *
  * @param <R> The return type of this {@link Generator}.
@@ -27,8 +27,6 @@ public abstract class NullstopGenerator<R> implements Generator<R>, Iterator<R> 
 		return element != null;
 	}
 
-	protected abstract R nextItem();
-
 	@Override
 	public final R next() {
 		if (cached) {
@@ -37,5 +35,7 @@ public abstract class NullstopGenerator<R> implements Generator<R>, Iterator<R> 
 		}
 		return nextItem();
 	}
+
+	protected abstract R nextItem();
 
 }
