@@ -21,35 +21,35 @@ import zeale.applicationss.notesss.Notesss;
  * being displayed on, and any {@link ApplicationProperties} it is given (with
  * any given {@link ApplicationProperties} taking priority).
  * </p>
- * 
+ *
  * @author Zeale
  *
  */
 public interface Page {
 
-	default Stage display() {
-		return display(new Stage());
+	enum StageState {
+		FULLSCREEN, WINDOWED
 	}
 
-	/**
-	 * Displays this {@link Page} on the given {@link Stage} and returns the
-	 * {@link Stage} when finished.
-	 * 
-	 * @return The {@link Stage} that this {@link Page} was displayed on.
-	 */
-	default Stage display(Stage stage) {
-		return display(stage, Notesss.properties());
+	default Stage display() {
+		return display(new Stage());
 	}
 
 	default Stage display(ApplicationProperties properties) {
 		return display(new Stage(), Notesss.properties());
 	}
 
-	Stage display(Stage stage, ApplicationProperties properties);
-
-	enum StageState {
-		FULLSCREEN, WINDOWED
+	/**
+	 * Displays this {@link Page} on the given {@link Stage} and returns the
+	 * {@link Stage} when finished.
+	 *
+	 * @return The {@link Stage} that this {@link Page} was displayed on.
+	 */
+	default Stage display(Stage stage) {
+		return display(stage, Notesss.properties());
 	}
+
+	Stage display(Stage stage, ApplicationProperties properties);
 
 	default void onStateChanged(StageState state) {
 	}

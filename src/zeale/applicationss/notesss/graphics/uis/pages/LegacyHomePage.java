@@ -100,9 +100,7 @@ public class LegacyHomePage implements Page {
 			try (PrintWriter writer = new PrintWriter(new FileOutputStream(out))) {
 				writer.print(input.getText());
 			} catch (FileNotFoundException e) {
-				PrintWriter errOut = Notesss.CONSOLE.getWriter();
-				e.printStackTrace(errOut);
-				errOut.close();
+				Notesss.error(e);
 			}
 		});
 
@@ -116,9 +114,7 @@ public class LegacyHomePage implements Page {
 				while ((c = reader.read()) != -1)
 					builder.append((char) c);
 			} catch (IOException e) {
-				PrintWriter errOut = Notesss.CONSOLE.getWriter();
-				e.printStackTrace(errOut);
-				errOut.close();
+				Notesss.error(e);
 			}
 
 			input.setText(builder.toString());

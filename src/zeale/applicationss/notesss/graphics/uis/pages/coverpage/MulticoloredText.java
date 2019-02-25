@@ -10,16 +10,16 @@ import zeale.applicationss.notesss.utilities.generators.Generator;
 /**
  * This class serves as an {@link HBox} that encapsulates multiple {@link Text}
  * objects, each of which hold a single character. the
- * 
+ *
  * @author Zeale
  *
  */
 class MulticoloredText extends HBox {
-	public String getText() {
-		String txt = "";
-		for (Node n : getChildren())
-			if (n instanceof Text)
-				txt += ((Text) n).getText();
+	private static final Object SPECIAL_TEXT_KEY = new Object();
+
+	private static final Text getText(String text) {
+		Text txt = new Text(text);
+		txt.getProperties().put(SPECIAL_TEXT_KEY, true);
 		return txt;
 	}
 
@@ -28,6 +28,14 @@ class MulticoloredText extends HBox {
 	public MulticoloredText(Generator<? extends Paint> colorSupplier) {
 		if ((this.colorSupplier = colorSupplier) == null)
 			throw new IllegalArgumentException("Color supplier cannot be null.");
+	}
+
+	public String getText() {
+		String txt = "";
+		for (Node n : getChildren())
+			if (n instanceof Text)
+				txt += ((Text) n).getText();
+		return txt;
 	}
 
 	public void setColorSupplier(Generator<? extends Paint> colorSupplier) {
@@ -46,19 +54,6 @@ class MulticoloredText extends HBox {
 			node.setFill(color == null ? Color.WHITE : color);
 		}
 
-	}
-
-	private static final Object SPECIAL_TEXT_KEY = new Object();
-
-	private static final Text getText(String text) {
-		Text txt = new Text(text);
-		txt.getProperties().put(SPECIAL_TEXT_KEY, true);
-		return txt;
-	}
-
-	@SuppressWarnings("unused")
-	private static final boolean isSpecialText(Node text) {
-		return text.getProperties().containsKey(SPECIAL_TEXT_KEY);
 	}
 
 }

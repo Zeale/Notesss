@@ -13,47 +13,7 @@ public class ColorWheel<CT extends Paint> implements Generator<CT>, Lengthed {
 
 	private final CT[] foregrounds, backgrounds;
 
-	public CT[] getForegrounds() {
-		return Arrays.copyOf(foregrounds, foregrounds.length);
-	}
-
-	public CT getForegroundColor(int index) {
-		return foregrounds.length == 0 ? null : foregrounds[index % foregrounds.length];
-	}
-
-	public CT getBackgroundColor(int index) {
-		return backgrounds.length == 0 ? null : backgrounds[index % backgrounds.length];
-	}
-
-	public CT getf(int index) {
-		return getForegroundColor(index);
-	}
-
-	public int getFSize() {
-		return foregrounds.length;
-	}
-
-	public int getBSize() {
-		return backgrounds.length;
-	}
-
-	public CT getb(int index) {
-		return getBackgroundColor(index);
-	}
-
-	public CT[] getBackgrounds() {
-		return Arrays.copyOf(backgrounds, backgrounds.length);
-	}
-
-	public CT[] getColors() {
-		CT[] colors = Arrays.copyOf(foregrounds, len());
-		System.arraycopy(backgrounds, 0, foregrounds, foregrounds.length, backgrounds.length);
-		return colors;
-	}
-
-	public CT getColor(int index) {
-		return (index %= (len())) > foregrounds.length ? backgrounds[index -= foregrounds.length] : foregrounds[index];
-	}
+	private int pos;
 
 	@SafeVarargs
 	public ColorWheel(CT[] foregrounds, CT... backgrounds) {
@@ -63,12 +23,51 @@ public class ColorWheel<CT extends Paint> implements Generator<CT>, Lengthed {
 		this.backgrounds = Arrays.copyOf(backgrounds, backgrounds.length);
 	}
 
-	private int pos;
+	public CT getb(int index) {
+		return getBackgroundColor(index);
+	}
 
-	public CT startOver() {
-		CT color = getColor(pos);
-		pos = 0;
-		return color;
+	public CT getBackgroundColor(int index) {
+		return backgrounds.length == 0 ? null : backgrounds[index % backgrounds.length];
+	}
+
+	public CT[] getBackgrounds() {
+		return Arrays.copyOf(backgrounds, backgrounds.length);
+	}
+
+	public int getBSize() {
+		return backgrounds.length;
+	}
+
+	public CT getColor(int index) {
+		return (index %= len()) > foregrounds.length ? backgrounds[index -= foregrounds.length] : foregrounds[index];
+	}
+
+	public CT[] getColors() {
+		CT[] colors = Arrays.copyOf(foregrounds, len());
+		System.arraycopy(backgrounds, 0, foregrounds, foregrounds.length, backgrounds.length);
+		return colors;
+	}
+
+	public CT getf(int index) {
+		return getForegroundColor(index);
+	}
+
+	public CT getForegroundColor(int index) {
+		return foregrounds.length == 0 ? null : foregrounds[index % foregrounds.length];
+	}
+
+	public CT[] getForegrounds() {
+		return Arrays.copyOf(foregrounds, foregrounds.length);
+	}
+
+	public int getFSize() {
+		return foregrounds.length;
+	}
+
+	@Override
+	public int length() {
+		return foregrounds.length + backgrounds.length;
 	}
 
 	@Override
@@ -76,9 +75,10 @@ public class ColorWheel<CT extends Paint> implements Generator<CT>, Lengthed {
 		return getColor(++pos >= len() ? (pos = 0) : pos);
 	}
 
-	@Override
-	public int length() {
-		return foregrounds.length + backgrounds.length;
+	public CT startOver() {
+		CT color = getColor(pos);
+		pos = 0;
+		return color;
 	}
 
 }

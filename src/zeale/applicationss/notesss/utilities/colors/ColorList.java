@@ -1,8 +1,9 @@
 package zeale.applicationss.notesss.utilities.colors;
 
+import static zeale.applicationss.notesss.utilities.Utilities.array;
+
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import static zeale.applicationss.notesss.utilities.Utilities.array;
 
 public final class ColorList<CT extends Paint> extends ColorWheel<CT> {
 
@@ -20,12 +21,12 @@ public final class ColorList<CT extends Paint> extends ColorWheel<CT> {
 	public static ColorList<Color> PURE = new ColorList<>(
 			array(color(0x0D, 0x07, 0x7A), color(0xF4, 0x6E, 0x07), color(0x45)), color(0x0F));
 
-	private static Color color(int red, int green, int blue) {
-		return new Color(red / 255d, green / 255d, blue / 255d, 1);
-	}
-
 	private static Color color(int red_green_blue) {
 		return color(red_green_blue, red_green_blue, red_green_blue);
+	}
+
+	private static Color color(int red, int green, int blue) {
+		return new Color(red / 255d, green / 255d, blue / 255d, 1);
 	}
 
 	@SafeVarargs

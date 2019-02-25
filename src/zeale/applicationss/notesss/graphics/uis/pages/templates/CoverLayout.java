@@ -31,10 +31,6 @@ public class CoverLayout implements Page {
 		return pane;
 	}
 
-	private final static StackPane getLayoutItemPane(Node node) {
-		return (StackPane) node.getProperties().get(LAYOUT_ITEM_PANE_KEY);
-	}
-
 	protected final VBox topLeftSquare = new VBox();
 	protected final Pane bottomLeftSquare = new Pane(), topRightSquare = new Pane(), bottomRightSquare = new Pane();
 
