@@ -8,7 +8,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -31,8 +30,8 @@ public class CoverLayout implements Page {
 		return pane;
 	}
 
-	protected final VBox topLeftSquare = new VBox();
-	protected final Pane bottomLeftSquare = new Pane(), topRightSquare = new Pane(), bottomRightSquare = new Pane();
+	protected final VBox topLeftSquare = new VBox(), topRightSquare = new VBox(), bottomLeftSquare = new VBox(),
+			bottomRightSquare = new VBox();
 
 	protected final Text title = new Text("Notesss");
 	protected final TextField searchBar = new TextField();
@@ -71,6 +70,9 @@ public class CoverLayout implements Page {
 		bottomRightSquare.setMinSize(boxMinWidth, boxMinHeight);
 
 		topLeftSquare.setAlignment(Pos.CENTER);
+		topRightSquare.setAlignment(Pos.CENTER);
+		bottomLeftSquare.setAlignment(Pos.CENTER);
+		bottomRightSquare.setAlignment(Pos.CENTER);
 
 //		VBox.setMargin(getLayoutItemPane(viewDummy), new Insets(0, 0, 0, 50));
 //		VBox.setMargin(getLayoutItemPane(settingsDummy), new Insets(0, 50, 0, 0));
