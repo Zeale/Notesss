@@ -76,14 +76,14 @@ public class HomePage extends CoverLayout {
 	}
 
 	private final DropShadow cardShadow = new DropShadow();
-	private final ImageView notesssIcon = new ImageView(
+	private final ImageView newNoteIcon = new ImageView(
 			"/zeale/application/notesss/_resources/graphics/ui/pages/home/Notepad-v1-2.png");
-	private final Text notesssButtonLabel = new Text("My Notes");
+	private final Text newNoteButtonLabel = new Text("New Note");
 
 	{
-		notesssIcon.setFitHeight(66);
-		notesssIcon.setFitWidth(50);
-		notesssIcon.setEffect(cardShadow);
+		newNoteIcon.setFitHeight(66);
+		newNoteIcon.setFitWidth(50);
+		newNoteIcon.setEffect(cardShadow);
 	}
 	private Stage stage;
 	private final BooleanProperty shadowed = new SimpleBooleanProperty(),
@@ -128,11 +128,11 @@ public class HomePage extends CoverLayout {
 		title.setEffect(cardShadow);
 		searchBar.setEffect(cardShadow);
 
-		notesssButtonLabel.setFont(Font.font(null, 28));
-		notesssButtonLabel.setStrokeWidth(0.8);
-		notesssButtonLabel.setEffect(cardShadow);
+		newNoteButtonLabel.setFont(Font.font(null, 28));
+		newNoteButtonLabel.setStrokeWidth(0.8);
+		newNoteButtonLabel.setEffect(cardShadow);
 
-		topLeftSquare.getChildren().addAll(notesssIcon, notesssButtonLabel);
+		topLeftSquare.getChildren().addAll(newNoteIcon, newNoteButtonLabel);
 		topLeftSquare.setSpacing(5);
 
 		applyMouseEffects(cardShadow, topLeftSquare, topRightSquare, bottomLeftSquare, bottomRightSquare);
@@ -153,8 +153,8 @@ public class HomePage extends CoverLayout {
 
 		// Styling using ApplicationProperties instance.
 		Paint color = properties.getColorGenerator().getf(2);
-		notesssButtonLabel.setFill(color);
-		notesssButtonLabel.setStroke(color);
+		newNoteButtonLabel.setFill(color);
+		newNoteButtonLabel.setStroke(color);
 
 		return super.display(stage, properties);
 	}
