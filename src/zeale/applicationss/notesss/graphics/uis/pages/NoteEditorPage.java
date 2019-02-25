@@ -4,8 +4,6 @@ import static zeale.applicationss.notesss.utilities.Utilities.getBackgroundFromC
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintWriter;
 
 import javafx.scene.Node;
@@ -27,16 +25,18 @@ import zeale.applicationss.notesss.utilities.Utilities;
 
 public class NoteEditorPage implements Page {
 
-	private final MenuItem save = new MenuItem("Save");
+	private final MenuItem exportToPlaintext = new MenuItem("Plaintext (Plain Text File)");
 	private Window stage;
 
 	private final FileChooser fileChooser = new FileChooser();
 
-	private final Menu fileMenu = new Menu("File", null, save);
+	private final Menu exportMenu = new Menu("Export to...", null, exportToPlaintext);
+	private final Menu fileMenu = new Menu("File", null, exportMenu);
 	private final MenuBar menubar = new MenuBar(fileMenu);
 	private final TextArea input = new TextArea();
 	private final AnchorPane center = new AnchorPane(input);
 	private final BorderPane root = new BorderPane(center);
+	
 	{
 		Utilities.setAllAnchors(80d, input);
 		root.setTop(menubar);
@@ -49,7 +49,7 @@ public class NoteEditorPage implements Page {
 	}
 
 	{
-		save.setOnAction(event -> {
+		exportToPlaintext.setOnAction(event -> {
 			File file = fileChooser.showSaveDialog(stage);
 			if (file != null) {
 				try (PrintWriter out = new PrintWriter(file)) {
