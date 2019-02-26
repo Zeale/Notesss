@@ -22,6 +22,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -49,9 +50,10 @@ public class NoteEditorPage implements Page {
 		// PROV The color of the text is being set with CSS and is not dependent on the
 		// current color generator.
 		// It should be based on the color generator, entirely.
-		input.setStyle("-fx-text-fill: #00f");
+		input.setStyle("-fx-text-fill: #000");
 
-		input.setFont(Font.font(16));
+		input.setFont(Font.font(null, FontWeight.BOLD, 16));
+		input.setWrapText(true);
 
 		FileStorage initialDir = Notesss.DATA_DIRECTORY.createChild("Raw Notesss");
 		if (initialDir.isAvailable())
