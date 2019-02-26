@@ -33,13 +33,14 @@ import zeale.apps.tools.api.data.files.filesystem.storage.FileStorage;
 
 public class NoteEditorPage implements Page {
 
-	private final MenuItem exportToPlaintext = new MenuItem("Plaintext (Plain Text File)");
-	private final MenuItem importFile = new MenuItem("Import File");
+	private final MenuItem exportToPlaintext = new MenuItem("Plaintext (Plain Text File)"),
+			exportToNotesssNote = new MenuItem(".sss (Notesss Note)");
+	private final MenuItem importFile = new MenuItem("Import");
 	private Window stage;
 
 	private final FileChooser fileChooser = new FileChooser();
 
-	private final Menu exportMenu = new Menu("Export to...", null, exportToPlaintext);
+	private final Menu exportMenu = new Menu("Export to...", null, exportToNotesssNote, exportToPlaintext);
 	private final Menu fileMenu = new Menu("File", null, exportMenu, importFile);
 	private final MenuBar menubar = new MenuBar(fileMenu);
 	private final TextArea input = new TextArea();
@@ -70,14 +71,26 @@ public class NoteEditorPage implements Page {
 	}
 
 	{
-		exportToPlaintext.setOnAction(event -> {
+		exportToNotesssNote.setOnAction(event -> {
 			File file = fileChooser.showSaveDialog(stage);
 			if (file != null) {
 				try (PrintWriter out = new PrintWriter(
 						new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_16))) {
 					out.print(input.getText());
 				} catch (FileNotFoundException e) {
-					Notesss.error(e, "Failed to save the document to the specified file. (" + e.getMessage() + ")");
+					Notesss.error(e, "Failed to save the document to the specified file. (" + e.getMessage()
+							+ "), (File: " + file + ")");
+				}
+			}
+		});
+		exportToPlaintext.setOnAction(event -> {
+			File file = fileChooser.showSaveDialog(stage);
+			if (file != null) {
+				try (PrintWriter out = new PrintWriter(file)) {
+					out.print(input.getText());
+				} catch (FileNotFoundException e) {
+					Notesss.error(e, "Failed to save the document to the specified file. (" + e.getMessage()
+							+ "), (File: " + file + ")");
 				}
 			}
 		});
