@@ -4,7 +4,12 @@ import static zeale.applicationss.notesss.utilities.Utilities.getBackgroundFromC
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -27,12 +32,13 @@ import zeale.apps.tools.api.data.files.filesystem.storage.FileStorage;
 public class NoteEditorPage implements Page {
 
 	private final MenuItem exportToPlaintext = new MenuItem("Plaintext (Plain Text File)");
+	private final MenuItem importFile = new MenuItem("Import File");
 	private Window stage;
 
 	private final FileChooser fileChooser = new FileChooser();
 
 	private final Menu exportMenu = new Menu("Export to...", null, exportToPlaintext);
-	private final Menu fileMenu = new Menu("File", null, exportMenu);
+	private final Menu fileMenu = new Menu("File", null, exportMenu, importFile);
 	private final MenuBar menubar = new MenuBar(fileMenu);
 	private final TextArea input = new TextArea();
 	private final AnchorPane center = new AnchorPane(input);
@@ -42,7 +48,7 @@ public class NoteEditorPage implements Page {
 		FileStorage initialDir = Notesss.DATA_DIRECTORY.createChild("Raw Notesss");
 		if (initialDir.isAvailable())
 			fileChooser.setInitialDirectory(initialDir.getFile());
-		
+
 		Utilities.setAllAnchors(80d, input);
 		root.setTop(menubar);
 		center.setFocusTraversable(true);
@@ -57,10 +63,27 @@ public class NoteEditorPage implements Page {
 		exportToPlaintext.setOnAction(event -> {
 			File file = fileChooser.showSaveDialog(stage);
 			if (file != null) {
-				try (PrintWriter out = new PrintWriter(file)) {
+				try (PrintWriter out = new PrintWriter(
+						new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_16))) {
 					out.print(input.getText());
 				} catch (FileNotFoundException e) {
 					Notesss.error(e, "Failed to save the document to the specified file. (" + e.getMessage() + ")");
+				}
+			}
+		});
+		importFile.setOnAction(event -> {
+			File file = fileChooser.showOpenDialog(stage);
+			if (file != null) {
+
+				try {
+					input.setText(new String(Files.readAllBytes(file.toPath()), StandardCharsets.UTF_16));
+				} catch (FileNotFoundException e1) {
+					Notesss.error(e1,
+							"The chosen directory does not exist. (" + e1.getMessage() + "), (File: " + file + ")");
+				} catch (IOException e2) {
+					Notesss.error(
+							"An error occurred while trying to close the data stream linked to the file that a note was being read from. (File: "
+									+ file + ")");
 				}
 			}
 		});
