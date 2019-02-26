@@ -22,6 +22,7 @@ import javafx.stage.Window;
 import zeale.applicationss.notesss.ApplicationProperties;
 import zeale.applicationss.notesss.Notesss;
 import zeale.applicationss.notesss.utilities.Utilities;
+import zeale.apps.tools.api.data.files.filesystem.storage.FileStorage;
 
 public class NoteEditorPage implements Page {
 
@@ -36,8 +37,12 @@ public class NoteEditorPage implements Page {
 	private final TextArea input = new TextArea();
 	private final AnchorPane center = new AnchorPane(input);
 	private final BorderPane root = new BorderPane(center);
-	
+
 	{
+		FileStorage initialDir = Notesss.DATA_DIRECTORY.createChild("Raw Notesss");
+		if (initialDir.isAvailable())
+			fileChooser.setInitialDirectory(initialDir.getFile());
+		
 		Utilities.setAllAnchors(80d, input);
 		root.setTop(menubar);
 		center.setFocusTraversable(true);

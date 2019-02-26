@@ -13,6 +13,8 @@ import zeale.applicationss.notesss.ApplicationProperties.PropertyEditor;
 import zeale.applicationss.notesss.launch.JavaFXNotesLauncher;
 import zeale.applicationss.notesss.utilities.Utilities;
 import zeale.applicationss.notesss.utilities.colors.ColorList;
+import zeale.apps.tools.api.data.files.filesystem.storage.FileStorage;
+import zeale.apps.tools.api.data.files.filesystem.storage.FileStorage.SubStorage;
 import zeale.apps.tools.console.Console;
 import zeale.apps.tools.console.std.StandardConsole;
 
@@ -38,7 +40,14 @@ import zeale.apps.tools.console.std.StandardConsole;
 public class Notesss {
 
 	private static final String DEFAULT_FILESTORAGE_PATH = System.getProperty("user.home", "C:/Program Files")
-			+ "/Notesss/File Storage";
+			+ "/Notesss/";
+	private static final File DEFAULT_FILESTORAGE_FILE = new File(DEFAULT_FILESTORAGE_PATH);
+	public final static FileStorage HOME_DIRECTORY = new FileStorage(DEFAULT_FILESTORAGE_FILE);
+	public final static SubStorage DATA_DIRECTORY = HOME_DIRECTORY.createChild("Data").createChild("Notesss");
+
+	public static FileStorage getRootDirectory() {
+		return HOME_DIRECTORY;
+	}
 
 	public static Console<?> CONSOLE = new StandardConsole();
 
