@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
@@ -35,13 +36,15 @@ public class NoteEditorPage implements Page {
 
 	private final MenuItem exportToPlaintext = new MenuItem("Plaintext (Plain Text File)"),
 			exportToNotesssNote = new MenuItem(".sss (Notesss Note)");
-	private final MenuItem importFile = new MenuItem("Import");
+	private final MenuItem importPlaintext = new MenuItem("Plaintext (Plain Text File)"),
+			importNotesssFile = new MenuItem(".sss (Notesss Note)");
 	private Window stage;
 
 	private final FileChooser fileChooser = new FileChooser();
 
-	private final Menu exportMenu = new Menu("Export to...", null, exportToNotesssNote, exportToPlaintext);
-	private final Menu fileMenu = new Menu("File", null, exportMenu, importFile);
+	private final Menu exportMenu = new Menu("Export to...", null, exportToNotesssNote, exportToPlaintext),
+			importMenu = new Menu("Import...", null, importNotesssFile, importPlaintext);
+	private final Menu fileMenu = new Menu("File", null, exportMenu, importMenu);
 	private final MenuBar menubar = new MenuBar(fileMenu);
 	private final TextArea input = new TextArea();
 	private final AnchorPane center = new AnchorPane(input);
@@ -94,12 +97,28 @@ public class NoteEditorPage implements Page {
 				}
 			}
 		});
-		importFile.setOnAction(event -> {
+		importNotesssFile.setOnAction(event -> {
 			File file = fileChooser.showOpenDialog(stage);
 			if (file != null) {
 
 				try {
 					input.setText(new String(Files.readAllBytes(file.toPath()), StandardCharsets.UTF_16));
+				} catch (FileNotFoundException e1) {
+					Notesss.error(e1,
+							"The chosen directory does not exist. (" + e1.getMessage() + "), (File: " + file + ")");
+				} catch (IOException e2) {
+					Notesss.error(
+							"An error occurred while trying to close the data stream linked to the file that a note was being read from. (File: "
+									+ file + ")");
+				}
+			}
+		});
+		importPlaintext.setOnAction(event -> {
+			File file = fileChooser.showOpenDialog(stage);
+			if (file != null) {
+
+				try {
+					input.setText(new String(Files.readAllBytes(file.toPath()), Charset.defaultCharset()));
 				} catch (FileNotFoundException e1) {
 					Notesss.error(e1,
 							"The chosen directory does not exist. (" + e1.getMessage() + "), (File: " + file + ")");
