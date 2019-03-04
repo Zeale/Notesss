@@ -14,7 +14,8 @@ public class ResourceObtainer {
 	 * @return
 	 * 
 	 *         <pre>
-	 * <code>ResourceObtainer.class.getResourceAsStream(path.startsWith("int://") && path.length() > 6 ? path.substring(6) : path)</code>
+	 * <code>ResourceObtainer.class
+				.getResourceAsStream(path.startsWith("int:") && path.length() > 4 ? path.substring(4) : path)</code>
 	 *         </pre>
 	 */
 	public static InputStream resource(String path) {
