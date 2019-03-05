@@ -1,7 +1,6 @@
 package zeale.applicationss.notesss.graphics.uis.pages;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,7 +10,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -21,11 +19,12 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import zeale.application.notesss._resources.ResourceObtainer;
 import zeale.applicationss.notesss.ApplicationProperties;
-import zeale.applicationss.notesss.api.Note;
+import zeale.applicationss.notesss.Notesss;
 import zeale.applicationss.notesss.utilities.Utilities;
 
 public class DataViewerPage implements Page {
@@ -39,7 +38,7 @@ public class DataViewerPage implements Page {
 
 	private final ObservableList<File> data = FXCollections
 			.synchronizedObservableList(FXCollections.observableList(new LinkedList<>()));
-	private final Map<File, StackPane> icons = new HashMap<>();
+
 	{
 		data.addListener(new ListChangeListener<File>() {
 
@@ -49,25 +48,11 @@ public class DataViewerPage implements Page {
 					while (c.next()) {
 						if (c.wasAdded()) {
 							List<? extends File> change = c.getAddedSubList();
-							for (int i = 0; i < change.size(); i++) {
-
-								Note note;
-								Node layout;
-								try {
-									note = Note.note(change.get(i));
-									ImageView icon = new ImageView(note.icon());
-									Text title = new Text(note.title());
-
-									StackPane.setAlignment(title, Pos.BOTTOM_CENTER);
-									layout = new StackPane(icon, title);
-								} catch (FileNotFoundException e) {
-									e.printStackTrace();
-									layout = new ImageView(
-											new Image(ResourceObtainer.resource("graphics/icons/error1.png")));
-								}
-
-								DataViewerPage.this.layout.getChildren().add(c.getFrom() + i, layout);
-							}
+							int i = 0;
+							for (File f : change)
+								layout.getChildren().add(c.getFrom() + i++,
+										f.exists() ? makeNewItem(f.getName(), DEFAULT_NOTE_ICON)
+												: makeNewItem(null, DEFAULT_LOAD_FAILED_ICON));
 						} else if (c.wasRemoved()) {
 
 						} else if (c.wasPermutated()) {
@@ -82,6 +67,31 @@ public class DataViewerPage implements Page {
 
 			}
 		});
+
+		File[] children = Notesss.getRootDirectory().getFile().listFiles();
+		if (children == null) {
+			// TODO Write some code to display the error (and a refresh button).
+		} else
+			for (File f : children) {
+				data.add(f);
+			}
+	}
+
+	private final Map<File, StackPane> icons = new HashMap<>();
+
+	private final static Image DEFAULT_NOTE_ICON = new Image(
+			ResourceObtainer.resource("graphics/ui/pages/home/Notepad-v1-2.png")),
+			// TODO Get a "load failed" icon
+			DEFAULT_LOAD_FAILED_ICON = DEFAULT_NOTE_ICON;
+
+	private StackPane makeNewItem(String text, Image icon) {
+		StackPane pane = new StackPane();
+		Text title = new Text(text == null ? "Unknown..." : text);
+		title.setFill(text == null ? Color.FIREBRICK : Color.GREEN);
+		StackPane.setAlignment(title, Pos.BOTTOM_CENTER);
+		pane.getChildren().addAll(new ImageView(icon), title);
+
+		return pane;
 	}
 
 	{
@@ -96,8 +106,8 @@ public class DataViewerPage implements Page {
 		if (fullscreen)
 			stage.setFullScreen(true);
 
-		stage.setHeight(600);
-		stage.setWidth(800);
+		stage.setHeight(800);
+		stage.setWidth(1200);
 		return stage;
 	}
 
