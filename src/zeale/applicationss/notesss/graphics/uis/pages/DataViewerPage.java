@@ -114,7 +114,7 @@ public class DataViewerPage implements Page {
 	private final Map<File, VBox> loadedFilesItemCache = new HashMap<>();
 
 	private final static Image DEFAULT_NOTE_ICON = new Image(
-			ResourceObtainer.resource("graphics/ui/pages/home/Notepad-v1-2.png"), 128, 128, true, false),
+			ResourceObtainer.resource("graphics/ui/pages/home/Notepad-v1-2.png"), 64, 64, true, false),
 			// TODO Get a "load failed" icon
 			DEFAULT_LOAD_FAILED_ICON = DEFAULT_NOTE_ICON;
 
