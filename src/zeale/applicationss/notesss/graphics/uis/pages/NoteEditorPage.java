@@ -59,7 +59,7 @@ public class NoteEditorPage implements Page {
 		input.setFont(Font.font(null, FontWeight.BOLD, 16));
 		input.setWrapText(true);
 
-		FileStorage initialDir = Notesss.DATA_DIRECTORY.createChild("Raw Notesss");
+		FileStorage initialDir = Notesss.DEFAULT_NOTE_STORAGE;
 		if (initialDir.isAvailable())
 			fileChooser.setInitialDirectory(initialDir.getFile());
 

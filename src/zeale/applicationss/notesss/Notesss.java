@@ -43,7 +43,8 @@ public class Notesss {
 			+ "/Notesss/";
 	private static final File DEFAULT_FILESTORAGE_FILE = new File(DEFAULT_FILESTORAGE_PATH);
 	public final static FileStorage HOME_DIRECTORY = new FileStorage(DEFAULT_FILESTORAGE_FILE);
-	public final static SubStorage DATA_DIRECTORY = HOME_DIRECTORY.createChild("Data").createChild("Notesss");
+	public final static SubStorage DATA_DIRECTORY = HOME_DIRECTORY.createChild("Data").createChild("Notesss"),
+			DEFAULT_NOTE_STORAGE = DATA_DIRECTORY.createChild("Raw Notesss");
 
 	public static FileStorage getRootDirectory() {
 		return HOME_DIRECTORY;

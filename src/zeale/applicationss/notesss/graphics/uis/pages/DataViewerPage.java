@@ -74,7 +74,7 @@ public class DataViewerPage implements Page {
 			}
 		});
 
-		File[] children = Notesss.getRootDirectory().getFile().listFiles();
+		File[] children = Notesss.DEFAULT_NOTE_STORAGE.getFile().listFiles();
 		if (children == null) {
 			// TODO Write some code to display the error (and a refresh button).
 		} else
