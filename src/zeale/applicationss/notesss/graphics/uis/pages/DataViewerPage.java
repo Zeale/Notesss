@@ -20,6 +20,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import zeale.application.notesss._resources.ResourceObtainer;
@@ -28,6 +30,8 @@ import zeale.applicationss.notesss.Notesss;
 import zeale.applicationss.notesss.utilities.Utilities;
 
 public class DataViewerPage implements Page {
+
+	// TODO Style page.
 
 	private final TilePane layout = new TilePane();
 	private final TextField search = new TextField();
@@ -45,6 +49,8 @@ public class DataViewerPage implements Page {
 			@Override
 			public void onChanged(Change<? extends File> c) {
 				synchronized (data) {
+					// TODO Finish change handling.
+					// TODO Handle exceptions accordingly.
 					while (c.next()) {
 						if (c.wasAdded()) {
 							List<? extends File> change = c.getAddedSubList();
@@ -77,20 +83,22 @@ public class DataViewerPage implements Page {
 			}
 	}
 
-	private final Map<File, StackPane> icons = new HashMap<>();
+	// TODO Cache StackPanes against their Files when they're made, so we don't
+	// create duplicate items.
+	private final Map<File, VBox> loadedFilesItemCache = new HashMap<>();
 
 	private final static Image DEFAULT_NOTE_ICON = new Image(
-			ResourceObtainer.resource("graphics/ui/pages/home/Notepad-v1-2.png")),
+			ResourceObtainer.resource("graphics/ui/pages/home/Notepad-v1-2.png"), 128, 128, true, false),
 			// TODO Get a "load failed" icon
 			DEFAULT_LOAD_FAILED_ICON = DEFAULT_NOTE_ICON;
 
-	private StackPane makeNewItem(String text, Image icon) {
-		StackPane pane = new StackPane();
+	private VBox makeNewItem(String text, Image icon) {
 		Text title = new Text(text == null ? "Unknown..." : text);
 		title.setFill(text == null ? Color.FIREBRICK : Color.GREEN);
-		StackPane.setAlignment(title, Pos.BOTTOM_CENTER);
-		pane.getChildren().addAll(new ImageView(icon), title);
+		title.setFont(Font.font(null, FontWeight.BOLD, 24));
 
+		VBox pane = new VBox(5, new ImageView(icon), title);
+		pane.setAlignment(Pos.CENTER);
 		return pane;
 	}
 
