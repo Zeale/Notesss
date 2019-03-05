@@ -37,8 +37,33 @@ public class DataViewerPage implements Page {
 	private final TextField search = new TextField();
 	private final VBox topVBox = new VBox(search);
 	private final StackPane topLayout = new StackPane(topVBox);
-	private final AnchorPane center = new AnchorPane(layout), top = new AnchorPane(topLayout);
+	private final AnchorPane center = new AnchorPane(), top = new AnchorPane(topLayout);
+	{
+		StackPane layoutCenteringPane = new StackPane(layout);
+		Utilities.setAllAnchors(25d, layoutCenteringPane);
+		center.getChildren().add(layoutCenteringPane);
+	}
 	private final BorderPane root = new BorderPane(center);
+
+	{
+		layout.setHgap(20d);
+		layout.setVgap(30d);
+	}
+
+	@Override
+	public Stage display(Stage stage, ApplicationProperties properties) {
+
+		root.setBackground(Utilities.getBackgroundFromColor(properties.getColorGenerator().getb(0)));
+
+		boolean fullscreen = stage.isFullScreen();
+		stage.setScene(new Scene(root));
+		if (fullscreen)
+			stage.setFullScreen(true);
+
+		stage.setHeight(800);
+		stage.setWidth(1200);
+		return stage;
+	}
 
 	private final ObservableList<File> data = FXCollections
 			.synchronizedObservableList(FXCollections.observableList(new LinkedList<>()));
@@ -105,18 +130,6 @@ public class DataViewerPage implements Page {
 	{
 		root.setTop(top);
 		Utilities.setAllAnchors(0d, topLayout);
-	}
-
-	@Override
-	public Stage display(Stage stage, ApplicationProperties properties) {
-		boolean fullscreen = stage.isFullScreen();
-		stage.setScene(new Scene(root));
-		if (fullscreen)
-			stage.setFullScreen(true);
-
-		stage.setHeight(800);
-		stage.setWidth(1200);
-		return stage;
 	}
 
 }
