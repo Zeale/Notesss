@@ -54,6 +54,7 @@ public class DataViewerPage implements Page {
 	public Stage display(Stage stage, ApplicationProperties properties) {
 
 		root.setBackground(Utilities.getBackgroundFromColor(properties.getColorGenerator().getb(0)));
+		search.setBackground(Utilities.getBackgroundFromColor(properties.getColorGenerator().getf(2)));
 
 		boolean fullscreen = stage.isFullScreen();
 		stage.setScene(new Scene(root));
