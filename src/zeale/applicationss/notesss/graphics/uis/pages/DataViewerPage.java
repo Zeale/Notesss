@@ -100,6 +100,7 @@ public class DataViewerPage implements Page {
 			}
 		});
 
+		// TODO Employ file watching API.
 		File[] children = Notesss.DEFAULT_NOTE_STORAGE.getFile().listFiles();
 		if (children == null) {
 			// TODO Write some code to display the error (and a refresh button).
