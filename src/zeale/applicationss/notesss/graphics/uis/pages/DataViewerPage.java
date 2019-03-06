@@ -2,6 +2,7 @@ package zeale.applicationss.notesss.graphics.uis.pages;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -69,35 +70,47 @@ public class DataViewerPage implements Page {
 	private final ObservableList<File> data = FXCollections
 			.synchronizedObservableList(FXCollections.observableList(new LinkedList<>()));
 
+	// TODO Cache StackPanes against their Files when they're made, so we don't
+	// create duplicate items.
+	private final Map<File, VBox> loadedFilesItemCache = new HashMap<>();
+
 	{
-		data.addListener(new ListChangeListener<File>() {
+		data.addListener((ListChangeListener<File>) c -> {
+			synchronized (data) {
+				// TODO Finish change handling.
+				// TODO Handle exceptions accordingly.
+				while (c.next()) {
+					if (c.wasAdded()) {
+						List<? extends File> change = c.getAddedSubList();
+						int i1 = 0;
+						for (File f : change) {
 
-			@Override
-			public void onChanged(Change<? extends File> c) {
-				synchronized (data) {
-					// TODO Finish change handling.
-					// TODO Handle exceptions accordingly.
-					while (c.next()) {
-						if (c.wasAdded()) {
-							List<? extends File> change = c.getAddedSubList();
-							int i = 0;
-							for (File f : change)
-								layout.getChildren().add(c.getFrom() + i++,
-										f.exists() ? makeNewItem(f.getName(), DEFAULT_NOTE_ICON)
-												: makeNewItem(null, DEFAULT_LOAD_FAILED_ICON));
-						} else if (c.wasRemoved()) {
+							VBox item;
+							if (loadedFilesItemCache.containsKey(f)) {
+								item = loadedFilesItemCache.get(f);
+								updateItem(f, item);
+							} else {
+								item = f.exists() ? makeNewItem(f.getName(), DEFAULT_NOTE_ICON)
+										: makeNewItem(null, DEFAULT_LOAD_FAILED_ICON);
+							}
 
-						} else if (c.wasPermutated()) {
-
-						} else if (c.wasReplaced()) {
-
-						} else if (c.wasUpdated()) {
-
+							layout.getChildren().add(c.getFrom() + i1++, item);
 						}
+					} else if (c.wasRemoved()) {
+
+					} else if (c.wasPermutated()) {
+
+					} else if (c.wasReplaced()) {
+
+					} else if (c.wasUpdated()) {
+
+						int i2 = c.getFrom();
+						for (Iterator<File> itr = data.listIterator(c.getTo()); i2 < c.getTo(); i2++)
+							updateItem(itr.next());
 					}
 				}
-
 			}
+
 		});
 
 		// TODO Employ file watching API.
@@ -109,10 +122,6 @@ public class DataViewerPage implements Page {
 				data.add(f);
 			}
 	}
-
-	// TODO Cache StackPanes against their Files when they're made, so we don't
-	// create duplicate items.
-	private final Map<File, VBox> loadedFilesItemCache = new HashMap<>();
 
 	private final static Image DEFAULT_NOTE_ICON = new Image(
 			ResourceObtainer.resource("graphics/ui/pages/home/Notepad-v1-2.png"), 64, 64, true, false),
@@ -127,6 +136,24 @@ public class DataViewerPage implements Page {
 		VBox pane = new VBox(5, new ImageView(icon), title);
 		pane.setAlignment(Pos.CENTER);
 		return pane;
+	}
+
+	/**
+	 * Updates the specified {@link VBox} to match the given {@link File}. This is
+	 * useful if a {@link File} changes. Each {@link VBox} is displayed on this
+	 * page.
+	 * 
+	 * @param file The {@link File}.
+	 * @param item The {@link VBox} to be updated.
+	 */
+	private void updateItem(File file, VBox item) {
+		// TODO Update File.
+	}
+
+	private void updateItem(File file) {
+		if (file == null)
+			throw new IllegalArgumentException("Can't update a null file.");
+		updateItem(file, loadedFilesItemCache.get(file));
 	}
 
 	{
